@@ -1,58 +1,35 @@
 import { Tabs } from 'expo-router';
-import { MessageCircle, User } from 'lucide-react-native';
-import { Text, View } from 'react-native';
+import { Receipt, Users } from 'lucide-react-native';
 
 export default function TabLayout() {
-  // const { unreadCount } = useUnreadMessages();
-  const { unreadCount } = {unreadCount: 1};
-
   return (
     <Tabs
       screenOptions={{
         headerShown: false,
         tabBarStyle: {
-          backgroundColor: '#fff',
+          backgroundColor: '#ffffff',
           borderTopWidth: 1,
-          borderTopColor: '#eee',
+          borderTopColor: '#e5e7eb',
         },
-        tabBarActiveTintColor: '#0c3141',
-      }}
-    >
+        tabBarActiveTintColor: '#059669',
+        tabBarInactiveTintColor: '#9ca3af',
+      }}>
       <Tabs.Screen
-        name="messages"
+        name="index"
         options={{
-          title: 'Messages',
+          title: 'Split Bill',
           tabBarIcon: ({ size, color }) => (
-            <View style={{ position: 'relative' }}>
-              <MessageCircle size={size} color={color} />
-              {unreadCount > 0 && (
-                <View
-                  style={{
-                    position: 'absolute',
-                    top: -4,
-                    right: -6,
-                    backgroundColor: '#0c3141',
-                    borderRadius: 10,
-                    width: 18,
-                    height: 18,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                  }}
-                >
-                  <Text style={{ color: 'white', fontSize: 10, fontWeight: 'bold' }}>
-                    {unreadCount}
-                  </Text>
-                </View>
-              )}
-            </View>
+            <Receipt size={size} color={color} />
           ),
         }}
       />
       <Tabs.Screen
-        name="profile"
+        name="friends"
         options={{
-          title: 'Profile',
-          tabBarIcon: ({ size, color }) => <User size={size} color={color} />,
+          title: 'Add Friends',
+          tabBarIcon: ({ size, color }) => (
+            <Users size={size} color={color} />
+          ),
         }}
       />
     </Tabs>

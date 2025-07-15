@@ -29,7 +29,7 @@ const MainLayout = () => {
       // router.replace("/auth/signIn");
 
       const timeout = setTimeout(() => {
-        router.replace("/auth/signIn");
+        router.replace("/(tabs)");
       }, 3000);
 
     }
