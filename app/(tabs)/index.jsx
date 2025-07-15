@@ -1,6 +1,11 @@
 import { EllipsisVertical } from 'lucide-react-native';
-import { FlatList, Image, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Image, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import UserInfoCard from "../../components/UserInfoCard";
+
+import React, { useCallback } from 'react';
+import { MaterialTabBar, Tabs } from 'react-native-collapsible-tab-view';
+
+
 export default function followBillScreen() {
   const followers = [
     {
@@ -130,13 +135,39 @@ export default function followBillScreen() {
       phoneNumber: '+261 32 05 138 45',
     },
   ];
+  const renderItem = useCallback(({ item }) => {
+    // return (
+    //   <View
+    //     style={[styles.box, index % 2 === 0 ? styles.boxB : styles.boxA]}
+    //   />
+    // );
+    const isLast = index === followers.length - 1;
+    return (
+      <View
+        key={item.id}
+        style={[
+          styles.participantItem,
+          !isLast && { borderBottomWidth: 1, borderBottomColor: '#f3f4f6' },
+        ]}
+      >
+        <Image source={{ uri: item.avatar }} style={styles.participantAvatar} />
+        <View style={styles.participantInfo}>
+          <Text style={styles.participantName}>{item.name}</Text>
+          {item.phoneNumber && (
+            <Text style={styles.followerPhoneNumber}>{item.phoneNumber}</Text>
+          )}
+        </View>
+        <EllipsisVertical size={20} color="#999" />
+      </View>
+    );
+  }, []);
+  const identity = (v) => v + '';
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
+      {/* <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
         <UserInfoCard/>
 
-        {/* Follow Options */}
         <View style={styles.followOptions}>
           <TouchableOpacity style={[styles.followButton, styles.activeButton]}>
             <Text style={[styles.followButtonText, styles.activeButtonText]}>Followers</Text>
@@ -146,7 +177,6 @@ export default function followBillScreen() {
           </TouchableOpacity>
         </View>
 
-        {/* followers List */}
         <View style={styles.followersList}>
           <FlatList
             data={followers}
@@ -172,15 +202,51 @@ export default function followBillScreen() {
               );
             }}
             keyExtractor={(item, index) => index}
-            // contentContainerStyle={styles.listContent}
           />
-
-          {/* <TouchableOpacity style={styles.addFriendButton}>
-            <Plus size={24} color="#0c3141" />
-            <Text style={styles.addFriendText}>Add a Friend</Text>
-          </TouchableOpacity> */}
         </View>
-      </ScrollView>
+      </ScrollView> */}
+
+
+      <Tabs.Container
+        renderHeader={UserInfoCard}
+        headerHeight={250}
+        renderTabBar={(props) => <MaterialTabBar {...props} />}
+      >
+        <Tabs.Tab name="Followers" label="Followers">
+          <Tabs.FlatList
+            data={followers}
+            renderItem={({ item, index }) => {
+              const isLast = index === followers.length - 1;
+              return (
+                <View
+                  key={item.id}
+                  style={[
+                    styles.participantItem,
+                    !isLast && { borderBottomWidth: 1, borderBottomColor: '#f3f4f6' },
+                  ]}
+                >
+                  <Image source={{ uri: item.avatar }} style={styles.participantAvatar} />
+                  <View style={styles.participantInfo}>
+                    <Text style={styles.participantName}>{item.name}</Text>
+                    {item.phoneNumber && (
+                      <Text style={styles.followerPhoneNumber}>{item.phoneNumber}</Text>
+                    )}
+                  </View>
+                  <EllipsisVertical size={20} color="#999" />
+                </View>
+              );
+            }}
+            keyExtractor={(item, index) => index}
+          />
+        </Tabs.Tab>
+        <Tabs.Tab name="Following" label="Following">
+          <Tabs.ScrollView>
+            <View style={[styles.box, styles.boxA]} />
+            <View style={[styles.box, styles.boxB]} />
+          </Tabs.ScrollView>
+        </Tabs.Tab>
+      </Tabs.Container>
+
 
       {/* add Button */}
       <View style={styles.footer}>
