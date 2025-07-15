@@ -1,29 +1,56 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { useFonts } from 'expo-font';
-import { Stack } from 'expo-router';
-import { StatusBar } from 'expo-status-bar';
-import 'react-native-reanimated';
+import { Slot, useRootNavigationState, useRouter, useSegments } from 'expo-router';
+// import { AuthContextProvider, useAuth } from '../context/authContext';
+// import { UnreadMessagesProvider } from '../context/UnreadMessagesContext';
+import { useEffect } from 'react';
 
-import { useColorScheme } from '@/hooks/useColorScheme';
+const MainLayout = () => {
+  // const {isAuthentificated} = useAuth();
+  const {isAuthentificated} = {isAuthentificated: false};
 
-export default function RootLayout() {
-  const colorScheme = useColorScheme();
-  const [loaded] = useFonts({
-    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
-  });
+  const router = useRouter();
+  const navigationState = useRootNavigationState();
+  const segments = useSegments();
 
-  if (!loaded) {
-    // Async font loading only occurs in development.
-    return null;
-  }
+  useEffect(() => {
+    console.log("segments", segments)
 
-  return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="+not-found" />
-      </Stack>
-      <StatusBar style="auto" />
-    </ThemeProvider>
-  );
+    if (!navigationState?.key) return;
+    
+    if (typeof isAuthentificated === 'undefined') return;
+
+    const inTabs = segments[0] == '(tabs)';
+    
+    if (isAuthentificated && !inTabs){
+      //redirect to messages
+      // router.replace("messages");
+    }
+    else if(isAuthentificated == false) {
+      // redirect to login
+      // router.replace("/auth/signIn");
+
+      const timeout = setTimeout(() => {
+        router.replace("/auth/signIn");
+      }, 3000);
+
+    }
+
+  },[isAuthentificated])  
+  return <Slot />
 }
+
+// const RootLayout = () => {
+//   return (
+//     <AuthContextProvider>
+//        <UnreadMessagesProvider>
+//         <MainLayout />
+//        </UnreadMessagesProvider>
+//     </AuthContextProvider>
+//   )
+// }
+const RootLayout = () => {
+  return (
+    <MainLayout />
+  )
+}
+
+export default RootLayout;
