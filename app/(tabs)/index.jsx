@@ -1,3 +1,4 @@
+import { EllipsisVertical, QrCode } from 'lucide-react-native';
 import { FlatList, Image, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 export default function followBillScreen() {
@@ -13,7 +14,7 @@ export default function followBillScreen() {
       name: 'Jane Cooper',
       avatar: 'https://images.pexels.com/photos/1036623/pexels-photo-1036623.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&fit=crop',
       amount: 37.67,
-      status: 'Paid',
+      phoneNumber: '+261 32 05 138 45',
     },
     {
       id: '3',
@@ -26,14 +27,14 @@ export default function followBillScreen() {
       name: 'Cameron Williamson',
       avatar: 'https://images.pexels.com/photos/1642228/pexels-photo-1642228.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&fit=crop',
       amount: 37.67,
-      status: 'Pending',
+      phoneNumber: '+261 32 05 138 45',
     },
     {
       id: '2',
       name: 'Jane Cooper',
       avatar: 'https://images.pexels.com/photos/1036623/pexels-photo-1036623.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&fit=crop',
       amount: 37.67,
-      status: 'Paid',
+      phoneNumber: '+261 32 05 138 45',
     },
     {
       id: '3',
@@ -46,14 +47,14 @@ export default function followBillScreen() {
       name: 'Cameron Williamson',
       avatar: 'https://images.pexels.com/photos/1642228/pexels-photo-1642228.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&fit=crop',
       amount: 37.67,
-      status: 'Pending',
+      phoneNumber: '+261 32 05 138 45',
     },
     {
       id: '2',
       name: 'Jane Cooper',
       avatar: 'https://images.pexels.com/photos/1036623/pexels-photo-1036623.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&fit=crop',
       amount: 37.67,
-      status: 'Paid',
+      phoneNumber: '+261 32 05 138 45',
     },
     {
       id: '3',
@@ -66,34 +67,34 @@ export default function followBillScreen() {
       name: 'Cameron Williamson',
       avatar: 'https://images.pexels.com/photos/1642228/pexels-photo-1642228.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&fit=crop',
       amount: 37.67,
-      status: 'Pending',
+      phoneNumber: '+261 32 05 138 45',
     },
     {
       id: '2',
       name: 'Jane Cooper',
       avatar: 'https://images.pexels.com/photos/1036623/pexels-photo-1036623.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&fit=crop',
       amount: 37.67,
-      status: 'Paid',
+      phoneNumber: '+261 32 05 138 45',
     },
     {
       id: '3',
       name: 'Wade Warren',
       avatar: 'https://images.pexels.com/photos/1043471/pexels-photo-1043471.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&fit=crop',
-      amount: 37.67,
+      phoneNumber: '+261 32 05 138 45',
     },
     {
       id: '4',
       name: 'Cameron Williamson',
       avatar: 'https://images.pexels.com/photos/1642228/pexels-photo-1642228.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&fit=crop',
       amount: 37.67,
-      status: 'Pending',
+      phoneNumber: '+261 32 05 138 45',
     },
     {
       id: '2',
       name: 'Jane Cooper',
       avatar: 'https://images.pexels.com/photos/1036623/pexels-photo-1036623.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&fit=crop',
       amount: 37.67,
-      status: 'Paid',
+      phoneNumber: '+261 32 05 138 45',
     },
     {
       id: '3',
@@ -106,14 +107,14 @@ export default function followBillScreen() {
       name: 'Cameron Williamson',
       avatar: 'https://images.pexels.com/photos/1642228/pexels-photo-1642228.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&fit=crop',
       amount: 37.67,
-      status: 'Pending',
+      phoneNumber: '+261 32 05 138 45',
     },
     {
       id: '2',
       name: 'Jane Cooper',
       avatar: 'https://images.pexels.com/photos/1036623/pexels-photo-1036623.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&fit=crop',
       amount: 37.67,
-      status: 'Paid',
+      phoneNumber: '+261 32 05 138 45',
     },
     {
       id: '3',
@@ -126,7 +127,7 @@ export default function followBillScreen() {
       name: 'Cameron Williamson',
       avatar: 'https://images.pexels.com/photos/1642228/pexels-photo-1642228.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&fit=crop',
       amount: 37.67,
-      status: 'Pending',
+      phoneNumber: '+261 32 05 138 45',
     },
   ];
 
@@ -140,10 +141,12 @@ export default function followBillScreen() {
               style={styles.merchantLogo}
             />
             <View style={styles.userInfo}>
-              <Text style={styles.userName}>Starbucks Coffee</Text>
+              <Text style={styles.userName}>FARALAHY Julio</Text>
               <Text style={styles.userPhone}>+261 32 45 018 01</Text>
             </View>
-            <Text style={styles.showUserInfo}>Info</Text>
+            {/* <Text style={styles.showUserInfo}>QrCode</Text> */}
+            <QrCode size={20} color="#999" />
+
           </View>
         </View>
 
@@ -174,29 +177,29 @@ export default function followBillScreen() {
                   <Image source={{ uri: item.avatar }} style={styles.participantAvatar} />
                   <View style={styles.participantInfo}>
                     <Text style={styles.participantName}>{item.name}</Text>
-                    {item.status && (
-                      <Text style={styles.followerstatus}>{item.status}</Text>
+                    {item.phoneNumber && (
+                      <Text style={styles.followerPhoneNumber}>{item.phoneNumber}</Text>
                     )}
                   </View>
-                  <Text style={styles.participantAmount}>${item.amount}</Text>
+                  <EllipsisVertical size={20} color="#999" />
                 </View>
               );
             }}
-            keyExtractor={(item) => item.id.toString()}
+            keyExtractor={(item, index) => index}
             // contentContainerStyle={styles.listContent}
           />
 
           {/* <TouchableOpacity style={styles.addFriendButton}>
-            <Plus size={24} color="#059669" />
+            <Plus size={24} color="#0c3141" />
             <Text style={styles.addFriendText}>Add a Friend</Text>
           </TouchableOpacity> */}
         </View>
       </ScrollView>
 
-      {/* Continue Button */}
+      {/* add Button */}
       <View style={styles.footer}>
-        <TouchableOpacity style={styles.continueButton}>
-          <Text style={styles.continueButtonText}>Continue</Text>
+        <TouchableOpacity style={styles.addButton}>
+          <Text style={styles.addButtonText}>Add a follower</Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>
@@ -208,7 +211,7 @@ const styles = StyleSheet.create({
     flex: 1,
     // backgroundColor: '#F6F6F6',
     backgroundColor: '#f9fafb',
-    paddingTop: 60
+    paddingTop: 60,
   },
   content: {
     flex: 1,
@@ -290,7 +293,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   activeButton: {
-    backgroundColor: '#059669',
+    backgroundColor: '#0c3141',
   },
   followButtonText: {
     fontSize: 16,
@@ -303,7 +306,7 @@ const styles = StyleSheet.create({
   followersList: {
     backgroundColor: '#ffffff',
     borderRadius: 10,
-    padding: 20,
+    paddingHorizontal: 20,
     // shadowColor: '#000',
     // shadowOffset: { width: 0, height: 2 },
     // shadowOpacity: 0.1,
@@ -339,14 +342,9 @@ const styles = StyleSheet.create({
     color: '#111827',
     marginBottom: 2,
   },
-  followerstatus: {
+  followerPhoneNumber: {
     fontSize: 14,
     color: '#6b7280',
-  },
-  participantAmount: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: '#111827',
   },
   addFriendButton: {
     flexDirection: 'row',
@@ -357,23 +355,23 @@ const styles = StyleSheet.create({
   addFriendText: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#059669',
+    color: '#0c3141',
     marginLeft: 10,
   },
   footer: {
-    padding: 20,
+    padding: 10,
     backgroundColor: '#ffffff',
     borderTopWidth: 1,
     borderTopColor: '#e5e7eb',
   },
-  continueButton: {
-    backgroundColor: '#059669',
-    paddingVertical: 16,
+  addButton: {
+    backgroundColor: '#0c3141',
+    paddingVertical: 13,
     borderRadius: 10,
     alignItems: 'center',
   },
-  continueButtonText: {
-    fontSize: 18,
+  addButtonText: {
+    fontSize: 15,
     fontWeight: '600',
     color: '#ffffff',
   },
