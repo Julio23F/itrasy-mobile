@@ -24,6 +24,15 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
+        name="exemple"
+        options={{
+          title: 'Exemple',
+          tabBarIcon: ({ size, color }) => (
+            <Users size={size} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
         name="friends"
         options={{
           title: 'Add Friends',
