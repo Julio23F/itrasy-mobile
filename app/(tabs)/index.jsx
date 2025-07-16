@@ -1,10 +1,8 @@
 import { EllipsisVertical } from 'lucide-react-native';
+import { default as React, useCallback } from 'react';
 import { Image, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import UserInfoCard from "../../components/UserInfoCard";
-
-import React, { useCallback } from 'react';
 import { MaterialTabBar, Tabs } from 'react-native-collapsible-tab-view';
-
+import UserInfoCard from "../../components/UserInfoCard";
 
 export default function followBillScreen() {
   const followers = [
@@ -206,9 +204,8 @@ export default function followBillScreen() {
         </View>
       </ScrollView> */}
 
-
       <Tabs.Container
-        renderHeader={UserInfoCard}
+        renderHeader={()=> <UserInfoCard style={{marginHorizontal: 10, marginTop: 10}}/>}
         headerHeight={250}
         renderTabBar={(props) => <MaterialTabBar {...props} />}
       >
@@ -217,12 +214,14 @@ export default function followBillScreen() {
             data={followers}
             renderItem={({ item, index }) => {
               const isLast = index === followers.length - 1;
+              const isFirst = index === 0;
               return (
                 <View
                   key={item.id}
                   style={[
                     styles.participantItem,
                     !isLast && { borderBottomWidth: 1, borderBottomColor: '#f3f4f6' },
+                    isFirst && { marginTop: 10 },
                   ]}
                 >
                   <Image source={{ uri: item.avatar }} style={styles.participantAvatar} />
@@ -330,6 +329,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     paddingVertical: 12,
+    backgroundColor: "#fff",
+    marginHorizontal: 15,
   },
   participantAvatar: {
     width: 45,

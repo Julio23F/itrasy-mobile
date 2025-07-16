@@ -1,9 +1,10 @@
 import { QrCode } from 'lucide-react-native';
 import { Image, StyleSheet, Text, View } from 'react-native';
 
-const userInfoCard = () => {
+const userInfoCard = ({...props}) => {
+
     return (
-        <View style={styles.userInfoCard}>
+        <View style={[styles.userInfoCard, props.style]}>
             <View style={styles.userInfoHeader}>
             <Image
                 source={{ uri: 'https://images.pexels.com/photos/302899/pexels-photo-302899.jpeg?auto=compress&cs=tinysrgb&w=60&h=60&fit=crop' }}
