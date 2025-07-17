@@ -5,7 +5,6 @@ export default function HomeLayout() {
     return (
         <Stack screenOptions={{
             headerShown: false,
-            // contentStyle: { backgroundColor: backgroundColor },
         }}>
             <Stack.Screen name="index" />
             <Stack.Screen name="searchFriends" />

@@ -285,7 +285,6 @@ export default function FollowersPage() {
 
 
       <View style={styles.footer}>
-        <Link href='/search/search'>test</Link>
         <TouchableOpacity style={styles.addButton} onPress={handleAddMember}>
           <Text style={styles.addButtonText}>Add a follower</Text>
         </TouchableOpacity>
