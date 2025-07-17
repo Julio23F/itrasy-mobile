@@ -1,8 +1,18 @@
 import { Image, StyleSheet, Text, TouchableOpacity, View, ScrollView, FlatList } from 'react-native';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import Animated, { FadeInRight } from "react-native-reanimated";
+import { EllipsisVertical } from 'lucide-react-native';
+import React, { memo } from "react";
 
-const FriendItem = ({item, isAldreadyFollow, isLast, ...props}) => {
+const FriendItem = ({item, index, isAldreadyFollow, isLast, isActionFollow=false, ...props}) => {
     return (
+      <Animated.View
+        entering={FadeInRight.delay(index * 200)
+          .duration(500)
+          .springify()
+          .damping(14)}
+        style={styles.container}
+      >
         <View
             key={item?.id}
             style={[
@@ -21,16 +31,24 @@ const FriendItem = ({item, isAldreadyFollow, isLast, ...props}) => {
             </View>
             {/* <EllipsisVertical size={20} color="#999" /> */}
             {
-                isAldreadyFollow ?
-                <TouchableOpacity style={styles.alreadyFollowButton}>
-                    <Text style={styles.alreadyFollowButtonText}>Suivi</Text>
-                </TouchableOpacity>
-                :
-                <TouchableOpacity style={[styles.followButton, styles.activeButton]}>
-                    <Text style={[styles.followButtonText, styles.activeButtonText]}>Suivre</Text>
-                </TouchableOpacity>
+              isActionFollow ?
+                (
+                  isAldreadyFollow ?
+                    <TouchableOpacity style={styles.alreadyFollowButton}>
+                        <Text style={styles.alreadyFollowButtonText}>Suivi</Text>
+                    </TouchableOpacity>
+                    :
+                    <TouchableOpacity style={[styles.followButton, styles.activeButton]}>
+                        <Text style={[styles.followButtonText, styles.activeButtonText]}>Suivre</Text>
+                    </TouchableOpacity>
+                )
+              : (<EllipsisVertical size={20} color="#999" />)
+            }
+            {
+                
             }
         </View>
+      </Animated.View>
     )
 }
 const styles = StyleSheet.create({
@@ -96,4 +114,4 @@ const styles = StyleSheet.create({
       },
 });
 
-export default FriendItem;
+export default memo(FriendItem);

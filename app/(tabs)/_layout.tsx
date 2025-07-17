@@ -15,7 +15,7 @@
 //         tabBarInactiveTintColor: '#9ca3af',
 //       }}>
 //       <Tabs.Screen
-//         name="index"
+//         name="(home)"
 //         options={{
 //           title: 'Home Page',
 //           tabBarIcon: ({ size, color }) => (
@@ -24,7 +24,7 @@
 //         }}
 //       />
 //       <Tabs.Screen
-//         name="exemple"
+//         name="(map)"
 //         options={{
 //           title: 'Exemple',
 //           tabBarIcon: ({ size, color }) => (
@@ -33,16 +33,7 @@
 //         }}
 //       />
 //       <Tabs.Screen
-//         name="searchFriends"
-//         options={{
-//           title: 'SearchFriends',
-//           tabBarIcon: ({ size, color }) => (
-//             <Users size={size} color={color} />
-//           ),
-//         }}
-//       />
-//       <Tabs.Screen
-//         name="profile"
+//         name="(profile)"
 //         options={{
 //           title: 'Profile',
 //           tabBarIcon: ({ size, color }) => (
@@ -81,13 +72,11 @@ function CustomTabBar({ state, descriptors, navigation }: any) {
 
         const getIcon = () => {
           switch (route.name) {
-            case 'index':
+            case '(home)':
               return <Users size={24} color={isFocused ? '#fff' : '#888'} />;
-            case 'example':
+            case '(map)':
               return <Map size={24} color={isFocused ? '#fff' : '#888'} />;
-            case 'searchFriends':
-              return <Search size={24} color={isFocused ? '#fff' : '#888'} />;
-            case 'profile':
+            case '(profile)':
               return <UserCog size={24} color={isFocused ? '#fff' : '#888'} />;
             default:
               return null;
@@ -116,10 +105,9 @@ export default function TabLayout() {
         headerShown: false,
       }}
     >
-      <Tabs.Screen name="index" />
-      <Tabs.Screen name="example" />
-      <Tabs.Screen name="searchFriends" />
-      <Tabs.Screen name="profile" />
+      <Tabs.Screen name="(home)" />
+      <Tabs.Screen name="(map)" />
+      <Tabs.Screen name="(profile)" />
     </Tabs>
   );
 }

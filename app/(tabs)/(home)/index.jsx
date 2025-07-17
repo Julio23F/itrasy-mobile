@@ -2,11 +2,16 @@ import { EllipsisVertical } from 'lucide-react-native';
 import { default as React, useCallback } from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View, ScrollView, FlatList } from 'react-native';
 import { MaterialTabBar, Tabs } from 'react-native-collapsible-tab-view';
-import UserInfoCard from "../../components/UserInfoCard";
+import UserInfoCard from "../../../components/UserInfoCard";
 import { SafeAreaView } from 'react-native-safe-area-context';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
-import FriendItem from "../../components/Friends/FriendItem";
+import FriendItem from "../../../components/FriendItem";
+import { router, Link } from 'expo-router';
+// import { useRouter } from 'expo-router';
+
+
 export default function FollowersPage() {
+  // const router = useRouter();
 
   const followers = [
     {
@@ -158,6 +163,10 @@ export default function FollowersPage() {
     );
   }, []);
 
+  const handleAddMember = () => {
+    router.push('/searchFriends');
+  };
+
   return (
     <SafeAreaView style={[styles.container]} >
      
@@ -233,22 +242,23 @@ export default function FollowersPage() {
                 const isLast = index === followers.length - 1;
                 const isFirst = index === 0;
                 return (
-                  <View
-                    key={item.id}
-                    style={[
-                      styles.participantItem,
-                      !isLast && { borderBottomWidth: 1, borderBottomColor: '#f3f4f6' },
-                    ]}
-                  >
-                    <Image source={{ uri: item.avatar }} style={styles.participantAvatar} />
-                    <View style={styles.participantInfo}>
-                      <Text style={styles.participantName}>{item.name}</Text>
-                      {item.phoneNumber && (
-                        <Text style={styles.followerPhoneNumber}>{item.phoneNumber}</Text>
-                      )}
-                    </View>
-                    <EllipsisVertical size={20} color="#999" />
-                  </View>
+                  // <View
+                  //   key={item.id}
+                  //   style={[
+                  //     styles.participantItem,
+                  //     !isLast && { borderBottomWidth: 1, borderBottomColor: '#f3f4f6' },
+                  //   ]}
+                  // >
+                  //   <Image source={{ uri: item.avatar }} style={styles.participantAvatar} />
+                  //   <View style={styles.participantInfo}>
+                  //     <Text style={styles.participantName}>{item.name}</Text>
+                  //     {item.phoneNumber && (
+                  //       <Text style={styles.followerPhoneNumber}>{item.phoneNumber}</Text>
+                  //     )}
+                  //   </View>
+                  //   <EllipsisVertical size={20} color="#999" />
+                  // </View>
+                  <FriendItem item={item} index={index} isActionFollow={false} isLast={isLast}/>
                 );
               }}
               keyExtractor={(item, index) => index}
@@ -264,7 +274,7 @@ export default function FollowersPage() {
                 const isLast = index === followers.length - 1;
                 const isAldreadyFollow = (index % 2) || (index % 3) == 0;
                 return (
-                  <FriendItem item={item} isAldreadyFollow={isAldreadyFollow} isLast={isLast}/>
+                  <FriendItem item={item} index={index} isActionFollow={true} isAldreadyFollow={isAldreadyFollow} isLast={isLast}/>
                 );
               }}
               keyExtractor={(item, index) => index}
@@ -275,7 +285,8 @@ export default function FollowersPage() {
 
 
       <View style={styles.footer}>
-        <TouchableOpacity style={styles.addButton}>
+        <Link href='/search/search'>test</Link>
+        <TouchableOpacity style={styles.addButton} onPress={handleAddMember}>
           <Text style={styles.addButtonText}>Add a follower</Text>
         </TouchableOpacity>
       </View>
