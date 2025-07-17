@@ -1,5 +1,8 @@
 {
   "expo": {
+    "updates": {
+      "enabled": false
+    },
     "name": "itrasy-mobile",
     "slug": "itrasy-mobile",
     "version": "1.0.0",

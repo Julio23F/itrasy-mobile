@@ -17,7 +17,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Split Bill',
+          title: 'Home Page',
           tabBarIcon: ({ size, color }) => (
             <Receipt size={size} color={color} />
           ),

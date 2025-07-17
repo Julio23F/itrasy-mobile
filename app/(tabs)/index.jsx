@@ -1,10 +1,13 @@
 import { EllipsisVertical } from 'lucide-react-native';
 import { default as React, useCallback } from 'react';
-import { Image, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Image, StyleSheet, Text, TouchableOpacity, View, ScrollView, FlatList } from 'react-native';
 import { MaterialTabBar, Tabs } from 'react-native-collapsible-tab-view';
 import UserInfoCard from "../../components/UserInfoCard";
+import { SafeAreaView } from 'react-native-safe-area-context';
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
 export default function followBillScreen() {
+
   const followers = [
     {
       id: '1',
@@ -162,8 +165,9 @@ export default function followBillScreen() {
   const identity = (v) => v + '';
 
   return (
-    <SafeAreaView style={styles.container}>
-      {/* <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
+    <SafeAreaView style={[styles.container]} >
+     
+     {/* <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
         <UserInfoCard/>
 
         <View style={styles.followOptions}>
@@ -205,38 +209,39 @@ export default function followBillScreen() {
       </ScrollView> */}
 
       <Tabs.Container
-        renderHeader={()=> <UserInfoCard style={{marginHorizontal: 10, marginTop: 10}}/>}
+        renderHeader={()=> <UserInfoCard style={{marginHorizontal: 10}}/>}
         headerHeight={250}
         renderTabBar={(props) => <MaterialTabBar {...props} />}
       >
         <Tabs.Tab name="Followers" label="Followers">
-          <Tabs.FlatList
-            data={followers}
-            renderItem={({ item, index }) => {
-              const isLast = index === followers.length - 1;
-              const isFirst = index === 0;
-              return (
-                <View
-                  key={item.id}
-                  style={[
-                    styles.participantItem,
-                    !isLast && { borderBottomWidth: 1, borderBottomColor: '#f3f4f6' },
-                    isFirst && { marginTop: 10 },
-                  ]}
-                >
-                  <Image source={{ uri: item.avatar }} style={styles.participantAvatar} />
-                  <View style={styles.participantInfo}>
-                    <Text style={styles.participantName}>{item.name}</Text>
-                    {item.phoneNumber && (
-                      <Text style={styles.followerPhoneNumber}>{item.phoneNumber}</Text>
-                    )}
+          <View style={[styles.followersList, {marginTop: 10}]}>
+            <Tabs.FlatList
+              data={followers}
+              renderItem={({ item, index }) => {
+                const isLast = index === followers.length - 1;
+                const isFirst = index === 0;
+                return (
+                  <View
+                    key={item.id}
+                    style={[
+                      styles.participantItem,
+                      !isLast && { borderBottomWidth: 1, borderBottomColor: '#f3f4f6' },
+                    ]}
+                  >
+                    <Image source={{ uri: item.avatar }} style={styles.participantAvatar} />
+                    <View style={styles.participantInfo}>
+                      <Text style={styles.participantName}>{item.name}</Text>
+                      {item.phoneNumber && (
+                        <Text style={styles.followerPhoneNumber}>{item.phoneNumber}</Text>
+                      )}
+                    </View>
+                    <EllipsisVertical size={20} color="#999" />
                   </View>
-                  <EllipsisVertical size={20} color="#999" />
-                </View>
-              );
-            }}
-            keyExtractor={(item, index) => index}
-          />
+                );
+              }}
+              keyExtractor={(item, index) => index}
+            />
+          </View>
         </Tabs.Tab>
         <Tabs.Tab name="Following" label="Following">
           <Tabs.ScrollView>
@@ -262,7 +267,6 @@ const styles = StyleSheet.create({
     flex: 1,
     // backgroundColor: '#F6F6F6',
     backgroundColor: '#f9fafb',
-    paddingTop: 60,
   },
   content: {
     flex: 1,
@@ -307,9 +311,13 @@ const styles = StyleSheet.create({
     color: '#ffffff',
   },
   followersList: {
-    backgroundColor: '#ffffff',
+    backgroundColor: '#fff',
     borderRadius: 10,
-    paddingHorizontal: 20,
+    // paddingHorizontal: 20,
+    // marginHorizontal: 50,
+    width: wp(96),
+    marginHorizontal: "auto",
+    alignItems: 'center',
     // shadowColor: '#000',
     // shadowOffset: { width: 0, height: 2 },
     // shadowOpacity: 0.1,
@@ -330,7 +338,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingVertical: 12,
     backgroundColor: "#fff",
-    marginHorizontal: 15,
+    // width: "90%",
+    marginHorizontal: wp(5)
   },
   participantAvatar: {
     width: 45,

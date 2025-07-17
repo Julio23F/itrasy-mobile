@@ -2,6 +2,7 @@ import { Slot, useRootNavigationState, useRouter, useSegments } from 'expo-route
 // import { AuthContextProvider, useAuth } from '../context/authContext';
 // import { UnreadMessagesProvider } from '../context/UnreadMessagesContext';
 import { useEffect } from 'react';
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
 const MainLayout = () => {
   // const {isAuthentificated} = useAuth();
@@ -29,6 +30,7 @@ const MainLayout = () => {
       // router.replace("/auth/signIn");
 
       const timeout = setTimeout(() => {
+        // router.replace("/auth/signIn");
         router.replace("/(tabs)");
       }, 3000);
 
@@ -49,7 +51,10 @@ const MainLayout = () => {
 // }
 const RootLayout = () => {
   return (
-    <MainLayout />
+    <SafeAreaProvider>
+      <MainLayout />
+
+    </SafeAreaProvider>
   )
 }
 
