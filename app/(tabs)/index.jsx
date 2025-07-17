@@ -5,8 +5,8 @@ import { MaterialTabBar, Tabs } from 'react-native-collapsible-tab-view';
 import UserInfoCard from "../../components/UserInfoCard";
 import { SafeAreaView } from 'react-native-safe-area-context';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
-
-export default function followBillScreen() {
+import FriendItem from "../../components/Friends/FriendItem";
+export default function FollowersPage() {
 
   const followers = [
     {
@@ -137,11 +137,6 @@ export default function followBillScreen() {
     },
   ];
   const renderItem = useCallback(({ item }) => {
-    // return (
-    //   <View
-    //     style={[styles.box, index % 2 === 0 ? styles.boxB : styles.boxA]}
-    //   />
-    // );
     const isLast = index === followers.length - 1;
     return (
       <View
@@ -162,7 +157,6 @@ export default function followBillScreen() {
       </View>
     );
   }, []);
-  const identity = (v) => v + '';
 
   return (
     <SafeAreaView style={[styles.container]} >
@@ -211,12 +205,30 @@ export default function followBillScreen() {
       <Tabs.Container
         renderHeader={()=> <UserInfoCard style={{marginHorizontal: 10}}/>}
         headerHeight={250}
-        renderTabBar={(props) => <MaterialTabBar {...props} />}
+        headerContainerStyle={{
+          backgroundColor: "#fff",
+          elevation: 0,      
+          shadowOpacity: 0,    
+          borderBottomWidth: 0, 
+          paddingTop: 10,
+
+          // borderBottomWidth: 1,
+          // borderBottomColor: "#e0e0e0",
+        }}
+        
+        renderTabBar={
+          (props) => (
+            <MaterialTabBar {...props} indicatorStyle={{
+              backgroundColor: '#0c3141', 
+            }} style={{ backgroundColor: '#f5f5f5', marginHorizontal: 10, marginBottom: 10, borderRadius: 7 }}/>
+          )
+        }
       >
         <Tabs.Tab name="Followers" label="Followers">
           <View style={[styles.followersList, {marginTop: 10}]}>
             <Tabs.FlatList
               data={followers}
+              showsVerticalScrollIndicator={false}
               renderItem={({ item, index }) => {
                 const isLast = index === followers.length - 1;
                 const isFirst = index === 0;
@@ -244,10 +256,20 @@ export default function followBillScreen() {
           </View>
         </Tabs.Tab>
         <Tabs.Tab name="Following" label="Following">
-          <Tabs.ScrollView>
-            <View style={[styles.box, styles.boxA]} />
-            <View style={[styles.box, styles.boxB]} />
-          </Tabs.ScrollView>
+          <View style={[styles.followersList, {marginTop: 10}]}>
+            <Tabs.FlatList
+              data={followers}
+              showsVerticalScrollIndicator={false}
+              renderItem={({ item, index }) => {
+                const isLast = index === followers.length - 1;
+                const isAldreadyFollow = (index % 2) || (index % 3) == 0;
+                return (
+                  <FriendItem item={item} isAldreadyFollow={isAldreadyFollow} isLast={isLast}/>
+                );
+              }}
+              keyExtractor={(item, index) => index}
+            />
+          </View>
         </Tabs.Tab>
       </Tabs.Container>
 
@@ -294,45 +316,24 @@ const styles = StyleSheet.create({
     elevation: 1,
   },
   followButton: {
-    flex: 1,
-    paddingVertical: 12,
+    // flex: 1,
+    paddingVertical: 7,
+    paddingHorizontal: 10,
     borderRadius: 7,
     alignItems: 'center',
   },
   activeButton: {
     backgroundColor: '#0c3141',
   },
-  followButtonText: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: '#6b7280',
-  },
   activeButtonText: {
     color: '#ffffff',
   },
-  followersList: {
-    backgroundColor: '#fff',
-    borderRadius: 10,
-    // paddingHorizontal: 20,
-    // marginHorizontal: 50,
-    width: wp(96),
-    marginHorizontal: "auto",
-    alignItems: 'center',
-    // shadowColor: '#000',
-    // shadowOffset: { width: 0, height: 2 },
-    // shadowOpacity: 0.1,
-    // shadowRadius: 8,
-    // elevation: 3,
-
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    shadowOpacity: 0.18,
-    shadowRadius: 1.00,
-    elevation: 1,
+  followButtonText: {
+    fontSize: 11,
+    fontWeight: '600',
+    color: '#6b7280',
   },
+  
   participantItem: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -360,6 +361,32 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#6b7280',
   },
+  followersList: {
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    // paddingHorizontal: 20,
+    // marginHorizontal: 50,
+    width: wp(96),
+    marginHorizontal: "auto",
+    alignItems: 'center',
+    // shadowColor: '#000',
+    // shadowOffset: { width: 0, height: 2 },
+    // shadowOpacity: 0.1,
+    // shadowRadius: 8,
+    // elevation: 3,
+
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.18,
+    shadowRadius: 1.00,
+    elevation: 1,
+  },
+
+
+
   addFriendButton: {
     flexDirection: 'row',
     alignItems: 'center',
