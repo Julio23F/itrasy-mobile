@@ -1,7 +1,7 @@
 import { Box } from '@/components/Box';
 import { useRouter } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import { Eye, EyeOff, MessageSquare } from 'lucide-react-native';
+import { Eye, EyeOff, MapPinned } from 'lucide-react-native';
 import React, { useState } from 'react';
 import {
   ActivityIndicator,
@@ -64,7 +64,7 @@ export default function SignIn() {
       <Box style={styles.content}>
         <StatusBar style='dark' />
         <Box style={styles.header}>
-          <MessageSquare size={48} color="#0c3141" />
+          <MapPinned size={48} color="#0c3141" />
           <Text style={styles.title}>Connexion</Text>
           <Text style={styles.subtitle}>Connectez-vous pour continuer</Text>
         </Box>

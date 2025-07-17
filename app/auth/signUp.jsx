@@ -1,7 +1,7 @@
 import { Box } from '@/components/Box';
 import { useRouter } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import { Eye, EyeOff, MessageSquare } from 'lucide-react-native';
+import { Eye, EyeOff, MapPinned } from 'lucide-react-native';
 import React, { useState } from 'react';
 import {
   ActivityIndicator,
@@ -78,11 +78,7 @@ export default function SignUp() {
         <StatusBar style="dark" />
         <Box style={styles.content}>
           <Box style={styles.header}>
-            <Image
-              source={{ uri: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?q=80&w=400&auto=format&fit=crop' }}
-              style={styles.headerImage}
-            />
-            <MessageSquare size={48} color="#0c3141" style={styles.logoIcon} />
+            <MapPinned size={48} color="#0c3141" style={styles.logoIcon} />
             <Text style={styles.title}>Créer un compte</Text>
             <Text style={styles.subtitle}>Rejoignez notre communauté de messagerie</Text>
           </Box>
