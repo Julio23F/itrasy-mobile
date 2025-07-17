@@ -274,7 +274,6 @@ export default function FollowersPage() {
       </Tabs.Container>
 
 
-      {/* add Button */}
       <View style={styles.footer}>
         <TouchableOpacity style={styles.addButton}>
           <Text style={styles.addButtonText}>Add a follower</Text>
