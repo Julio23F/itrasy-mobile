@@ -3,9 +3,37 @@ import api from "../config/api";
 // import Toast from "react-native-toast-message";
 
 
-export const getUserData = async () => {
+export const getUserAuthData = async () => {
   try {
     const response = await api.get("api/v1/member/auth/");
+    return response.data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      const openAiError = error.response?.data?.error;
+      console.log("openAiError", openAiError);
+      if (openAiError) {
+        // Toast.show({
+        //     type: "error",
+        //     text1: "Erreur",
+        //     text2: openAiError,
+
+        //     position: options.position || "top",
+        //     topOffset: 50,
+        // });
+      }
+    }
+    return null;
+  }
+};
+
+export const getUsers = async (options = {}) => {
+  try {
+    const response = await api.get(
+      "api/v1/member/all/",
+      {
+        params: options,
+      }
+    );
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {

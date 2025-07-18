@@ -6,7 +6,7 @@ import React, {
 } from "react";
 import { useStorageState } from "./useStorage";
 import { signInService } from "../services/auth";
-import { getUserData } from "../services/fetchData";
+import { getUserAuthData } from "../services/fetchData";
 
 // Contexte d'authentification
 const AuthContext = createContext();
@@ -29,7 +29,7 @@ export function SessionProvider({ children }) {
     const fetchUserData = async () => {
       if (session) {
         try {
-          const userData = await getUserData();
+          const userData = await getUserAuthData();
 
           console.log("userData ---------------- +++++++++++++++++++ //////////////// ", userData)
 
@@ -58,7 +58,7 @@ export function SessionProvider({ children }) {
     if (response.session) {
       setSession(response.session);
       try {
-        const userData = await getUserData();
+        const userData = await getUserAuthData();
         setUser(userData);
       } catch (error) {
         console.error("Erreur lors du chargement de l'utilisateur", error);

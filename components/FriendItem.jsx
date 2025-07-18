@@ -4,7 +4,7 @@ import Animated, { FadeInRight } from "react-native-reanimated";
 import { EllipsisVertical } from 'lucide-react-native';
 import React, { memo } from "react";
 
-const FriendItem = ({item, index, isAldreadyFollow, isLast, isActionFollow=false, ...props}) => {
+const FriendItem = ({item, index, isAldreadyFollow, isLast, style, isActionFollow=false, ...props}) => {
     return (
       <Animated.View
         entering={FadeInRight.delay(index * 200)
@@ -12,6 +12,7 @@ const FriendItem = ({item, index, isAldreadyFollow, isLast, isActionFollow=false
           .springify()
           .damping(14)}
         style={styles.container}
+        {...props}
       >
         <View
             key={item?.id}
@@ -19,7 +20,7 @@ const FriendItem = ({item, index, isAldreadyFollow, isLast, isActionFollow=false
                 styles.participantItem,
                 !isLast && { borderBottomWidth: 1, borderBottomColor: '#f3f4f6',},
                 isLast && { marginBottom: 10 },
-                props.style
+                style
             ]}
             >
             <Image 
