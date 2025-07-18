@@ -22,11 +22,15 @@ const FriendItem = ({item, index, isAldreadyFollow, isLast, isActionFollow=false
                 props.style
             ]}
             >
-            <Image source={{ uri: item?.avatar }} style={styles.participantAvatar} />
+            <Image 
+              source={{ 
+                uri: item.avatar ? item?.avatar : "https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&fit=crop" }} 
+                style={styles.participantAvatar} 
+            />
             <View style={styles.participantInfo}>
-                <Text style={styles.participantName}>{item?.name}</Text>
-                {item?.phoneNumber && (
-                <Text style={styles.followerPhoneNumber}>{item?.phoneNumber}</Text>
+                <Text style={styles.participantName}>{item?.first_name} {item?.last_name}</Text>
+                {item?.telnumber && (
+                <Text style={styles.followerPhoneNumber}>{item?.telnumber}</Text>
                 )}
             </View>
             {/* <EllipsisVertical size={20} color="#999" /> */}

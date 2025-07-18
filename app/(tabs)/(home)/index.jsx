@@ -1,5 +1,5 @@
 import { EllipsisVertical } from 'lucide-react-native';
-import { default as React, useCallback } from 'react';
+import { default as React, useCallback, useState } from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View, ScrollView, FlatList } from 'react-native';
 import { MaterialTabBar, Tabs } from 'react-native-collapsible-tab-view';
 import UserInfoCard from "../../../components/UserInfoCard";
@@ -8,160 +8,44 @@ import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-nativ
 import FriendItem from "../../../components/FriendItem";
 import { router, Link } from 'expo-router';
 // import { useRouter } from 'expo-router';
+import { useSession } from "../../../context/authContext";
+import { useEffect } from 'react';
+import { getFollowingUsers } from "../../../services/fetchData";
 
 
 export default function FollowersPage() {
   // const router = useRouter();
+  const { user } = useSession();
+  const [followers, setFollowers] = useState();
+  const [following, setFollowing] = useState();
 
-  const followers = [
-    {
-      id: '1',
-      name: 'You',
-      avatar: 'https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&fit=crop',
-      amount: 37.67,
-    },
-    {
-      id: '2',
-      name: 'Jane Cooper',
-      avatar: 'https://images.pexels.com/photos/1036623/pexels-photo-1036623.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&fit=crop',
-      amount: 37.67,
-      phoneNumber: '+261 32 05 138 45',
-    },
-    {
-      id: '3',
-      name: 'Wade Warren',
-      avatar: 'https://images.pexels.com/photos/1043471/pexels-photo-1043471.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&fit=crop',
-      amount: 37.67,
-    },
-    {
-      id: '4',
-      name: 'Cameron Williamson',
-      avatar: 'https://images.pexels.com/photos/1642228/pexels-photo-1642228.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&fit=crop',
-      amount: 37.67,
-      phoneNumber: '+261 32 05 138 45',
-    },
-    {
-      id: '2',
-      name: 'Jane Cooper',
-      avatar: 'https://images.pexels.com/photos/1036623/pexels-photo-1036623.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&fit=crop',
-      amount: 37.67,
-      phoneNumber: '+261 32 05 138 45',
-    },
-    {
-      id: '3',
-      name: 'Wade Warren',
-      avatar: 'https://images.pexels.com/photos/1043471/pexels-photo-1043471.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&fit=crop',
-      amount: 37.67,
-    },
-    {
-      id: '4',
-      name: 'Cameron Williamson',
-      avatar: 'https://images.pexels.com/photos/1642228/pexels-photo-1642228.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&fit=crop',
-      amount: 37.67,
-      phoneNumber: '+261 32 05 138 45',
-    },
-    {
-      id: '2',
-      name: 'Jane Cooper',
-      avatar: 'https://images.pexels.com/photos/1036623/pexels-photo-1036623.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&fit=crop',
-      amount: 37.67,
-      phoneNumber: '+261 32 05 138 45',
-    },
-    {
-      id: '3',
-      name: 'Wade Warren',
-      avatar: 'https://images.pexels.com/photos/1043471/pexels-photo-1043471.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&fit=crop',
-      amount: 37.67,
-    },
-    {
-      id: '4',
-      name: 'Cameron Williamson',
-      avatar: 'https://images.pexels.com/photos/1642228/pexels-photo-1642228.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&fit=crop',
-      amount: 37.67,
-      phoneNumber: '+261 32 05 138 45',
-    },
-    {
-      id: '2',
-      name: 'Jane Cooper',
-      avatar: 'https://images.pexels.com/photos/1036623/pexels-photo-1036623.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&fit=crop',
-      amount: 37.67,
-      phoneNumber: '+261 32 05 138 45',
-    },
-    {
-      id: '3',
-      name: 'Wade Warren',
-      avatar: 'https://images.pexels.com/photos/1043471/pexels-photo-1043471.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&fit=crop',
-      phoneNumber: '+261 32 05 138 45',
-    },
-    {
-      id: '4',
-      name: 'Cameron Williamson',
-      avatar: 'https://images.pexels.com/photos/1642228/pexels-photo-1642228.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&fit=crop',
-      amount: 37.67,
-      phoneNumber: '+261 32 05 138 45',
-    },
-    {
-      id: '2',
-      name: 'Jane Cooper',
-      avatar: 'https://images.pexels.com/photos/1036623/pexels-photo-1036623.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&fit=crop',
-      amount: 37.67,
-      phoneNumber: '+261 32 05 138 45',
-    },
-    {
-      id: '3',
-      name: 'Wade Warren',
-      avatar: 'https://images.pexels.com/photos/1043471/pexels-photo-1043471.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&fit=crop',
-      amount: 37.67,
-    },
-    {
-      id: '4',
-      name: 'Cameron Williamson',
-      avatar: 'https://images.pexels.com/photos/1642228/pexels-photo-1642228.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&fit=crop',
-      amount: 37.67,
-      phoneNumber: '+261 32 05 138 45',
-    },
-    {
-      id: '2',
-      name: 'Jane Cooper',
-      avatar: 'https://images.pexels.com/photos/1036623/pexels-photo-1036623.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&fit=crop',
-      amount: 37.67,
-      phoneNumber: '+261 32 05 138 45',
-    },
-    {
-      id: '3',
-      name: 'Wade Warren',
-      avatar: 'https://images.pexels.com/photos/1043471/pexels-photo-1043471.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&fit=crop',
-      amount: 37.67,
-    },
-    {
-      id: '4',
-      name: 'Cameron Williamson',
-      avatar: 'https://images.pexels.com/photos/1642228/pexels-photo-1642228.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&fit=crop',
-      amount: 37.67,
-      phoneNumber: '+261 32 05 138 45',
-    },
-  ];
-  const renderItem = useCallback(({ item }) => {
-    const isLast = index === followers.length - 1;
-    return (
-      <View
-        key={item.id}
-        style={[
-          styles.participantItem,
-          !isLast && { borderBottomWidth: 1, borderBottomColor: '#f3f4f6' },
-        ]}
-      >
-        <Image source={{ uri: item.avatar }} style={styles.participantAvatar} />
-        <View style={styles.participantInfo}>
-          <Text style={styles.participantName}>{item.name}</Text>
-          {item.phoneNumber && (
-            <Text style={styles.followerPhoneNumber}>{item.phoneNumber}</Text>
-          )}
-        </View>
-        <EllipsisVertical size={20} color="#999" />
-      </View>
-    );
+  const fetchFollowingUsers = async () => {
+    if (session) {
+      try {
+        const followingData = await getFollowingUsers();
+
+        console.log("followingData", followingData)
+
+        if (followingData) {
+          setFollowing(followingData);
+        }
+      } catch (error) {
+        console.error("Erreur lors de la récupération des données utilisateur", error);
+      }
+    } else {
+      setFollowing(null);
+    }
+  };
+
+  useEffect(() => {
+    console.log("user aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", user.followers);
+    setFollowers(user.followers)
+  }, [user]);
+
+  useEffect(() => {
+    fetchFollowingUsers();
   }, []);
+
 
   const handleAddMember = () => {
     router.push('/searchFriends');
@@ -198,8 +82,8 @@ export default function FollowersPage() {
                   <Image source={{ uri: item.avatar }} style={styles.participantAvatar} />
                   <View style={styles.participantInfo}>
                     <Text style={styles.participantName}>{item.name}</Text>
-                    {item.phoneNumber && (
-                      <Text style={styles.followerPhoneNumber}>{item.phoneNumber}</Text>
+                    {item.telnumber && (
+                      <Text style={styles.followerPhoneNumber}>{item.telnumber}</Text>
                     )}
                   </View>
                   <EllipsisVertical size={20} color="#999" />
@@ -252,8 +136,8 @@ export default function FollowersPage() {
                   //   <Image source={{ uri: item.avatar }} style={styles.participantAvatar} />
                   //   <View style={styles.participantInfo}>
                   //     <Text style={styles.participantName}>{item.name}</Text>
-                  //     {item.phoneNumber && (
-                  //       <Text style={styles.followerPhoneNumber}>{item.phoneNumber}</Text>
+                  //     {item.telnumber && (
+                  //       <Text style={styles.followerPhoneNumber}>{item.telnumber}</Text>
                   //     )}
                   //   </View>
                   //   <EllipsisVertical size={20} color="#999" />
@@ -268,10 +152,10 @@ export default function FollowersPage() {
         <Tabs.Tab name="Following" label="Following">
           <View style={[styles.followersList, {marginTop: 10}]}>
             <Tabs.FlatList
-              data={followers}
+              data={following}
               showsVerticalScrollIndicator={false}
               renderItem={({ item, index }) => {
-                const isLast = index === followers.length - 1;
+                const isLast = index === following.length - 1;
                 const isAldreadyFollow = (index % 2) || (index % 3) == 0;
                 return (
                   <FriendItem item={item} index={index} isActionFollow={true} isAldreadyFollow={isAldreadyFollow} isLast={isLast}/>

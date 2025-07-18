@@ -26,9 +26,9 @@ export const getUserData = async () => {
   }
 };
 
-export const getFriendsOnlineData = async () => {
+export const getFollowingUsers = async () => {
   try {
-    const response = await api.get("/auth/friends/");
+    const response = await api.get("api/v1/member/following/all/");
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {

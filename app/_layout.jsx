@@ -11,6 +11,7 @@ import { Text, View, SafeAreaView } from "react-native";
 
 const MainLayout = () => {
   const { session, isLoading } = useSession();
+  
   const segments = useSegments();
   const router = useRouter();
 
