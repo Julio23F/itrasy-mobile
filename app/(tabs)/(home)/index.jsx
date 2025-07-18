@@ -11,6 +11,7 @@ import { router, Link } from 'expo-router';
 import { useSession } from "../../../context/authContext";
 import { useEffect } from 'react';
 import { getFollowingUsers } from "../../../services/fetchData";
+import {checkIfFollowedById} from "../../../utils/member";
 
 
 export default function FollowersPage() {
@@ -101,7 +102,12 @@ export default function FollowersPage() {
                   //   </View>
                   //   <EllipsisVertical size={20} color="#999" />
                   // </View>
-                  <FriendItem item={item} index={index} isActionFollow={false} isLast={isLast}/>
+                  <FriendItem 
+                    item={item} 
+                    index={index} 
+                    isActionFollow={false} 
+                    isLast={isLast}
+                  />
                 );
               }}
               keyExtractor={(item, index) => index}
@@ -115,9 +121,21 @@ export default function FollowersPage() {
               showsVerticalScrollIndicator={false}
               renderItem={({ item, index }) => {
                 const isLast = index === following.length - 1;
-                const isAldreadyFollow = (index % 2) || (index % 3) == 0;
+                const isAldreadyFollow = checkIfFollowedById(item, user?.id);
+
                 return (
-                  <FriendItem item={item} index={index} isActionFollow={true} isAldreadyFollow={isAldreadyFollow} isLast={isLast}/>
+                  <FriendItem 
+                    item={item} 
+                    index={index} 
+                    isActionFollow={true} 
+                    isAldreadyFollow={isAldreadyFollow} 
+                    isLast={isLast}
+                    onPress={
+                      isAldreadyFollow 
+                      ? ()=>console.log("Déja suivi")
+                      : ()=>console.log("Action pour suivre")
+                    }
+                  />
                 );
               }}
               keyExtractor={(item, index) => index}

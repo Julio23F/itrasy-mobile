@@ -4,7 +4,16 @@ import Animated, { FadeInRight } from "react-native-reanimated";
 import { EllipsisVertical } from 'lucide-react-native';
 import React, { memo } from "react";
 
-const FriendItem = ({item, index, isAldreadyFollow, isLast, style, isActionFollow=false, ...props}) => {
+const FriendItem = ({
+    item, 
+    index, 
+    isAldreadyFollow, 
+    isLast, 
+    style, 
+    onPress,
+    isActionFollow=false, 
+    ...props
+  }) => {
     return (
       <Animated.View
         entering={FadeInRight.delay(index * 200)
@@ -39,11 +48,11 @@ const FriendItem = ({item, index, isAldreadyFollow, isLast, style, isActionFollo
               isActionFollow ?
                 (
                   isAldreadyFollow ?
-                    <TouchableOpacity style={styles.alreadyFollowButton}>
+                    <TouchableOpacity style={styles.alreadyFollowButton} onPress={onPress}>
                         <Text style={styles.alreadyFollowButtonText}>Suivi</Text>
                     </TouchableOpacity>
                     :
-                    <TouchableOpacity style={[styles.followButton, styles.activeButton]}>
+                    <TouchableOpacity style={[styles.followButton, styles.activeButton]} onPress={onPress}>
                         <Text style={[styles.followButtonText, styles.activeButtonText]}>Suivre</Text>
                     </TouchableOpacity>
                 )

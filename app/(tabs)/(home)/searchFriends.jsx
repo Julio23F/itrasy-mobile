@@ -6,7 +6,7 @@ import { router, Link } from 'expo-router';
 import { getUsers } from "../../../services/fetchData";
 import { useState, useEffect } from 'react';
 import { useSession } from "../../../context/authContext";
-
+import {checkIfFollowedById} from "../../../utils/member";
 
 export default function SearchFriends() {
   const { user } = useSession();
@@ -27,10 +27,7 @@ export default function SearchFriends() {
       console.error("Erreur lors de la récupération des données utilisateur", error);
     }
   };
-  //vérifie s’il existe au moins un follower dont l’id correspond à targetId
-  const checkIfFollowedById = (item, targetId) => {
-    return item.followers?.some(follower => follower.id === targetId) ?? false;
-  };
+
 
   // useEffect(() => {
   //   console.log("change")
@@ -44,7 +41,7 @@ export default function SearchFriends() {
       } else {
         setMembers([]);
       }
-    }, 350);
+    }, 300);
   
     return () => clearTimeout(delayDebounce);
   }, [search]);
@@ -91,7 +88,7 @@ export default function SearchFriends() {
             members.map((item, index) => {
               const isLast = index === members.length - 1;
               // const isAldreadyFollow = (index % 2) || (index % 3) === 0;
-              const isAldreadyFollow = checkIfFollowedById(item, user.id);
+              const isAldreadyFollow = checkIfFollowedById(item, user?.id);
               return (
                 <FriendItem 
                   key={index}
@@ -101,6 +98,12 @@ export default function SearchFriends() {
                   isLast={isLast}
                   isAldreadyFollow={isAldreadyFollow} 
                   isActionFollow={true}
+
+                  onPress={
+                    isAldreadyFollow 
+                    ? ()=>console.log("Déja suivi")
+                    : ()=>console.log("Action pour suivre")
+                  }
                 />
               );
             })
