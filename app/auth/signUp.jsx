@@ -1,4 +1,4 @@
-import { Box } from '@/components/Box';
+import { Box } from '../../components/Box';
 import { useRouter } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { Eye, EyeOff, MapPinned } from 'lucide-react-native';
