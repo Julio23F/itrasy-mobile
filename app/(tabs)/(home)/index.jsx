@@ -15,7 +15,7 @@ import { getFollowingUsers } from "../../../services/fetchData";
 
 export default function FollowersPage() {
   // const router = useRouter();
-  const { user } = useSession();
+  const { user, session } = useSession();
   const [followers, setFollowers] = useState();
   const [following, setFollowing] = useState();
 
@@ -24,7 +24,7 @@ export default function FollowersPage() {
       try {
         const followingData = await getFollowingUsers();
 
-        console.log("followingData", followingData)
+        console.log("followingData /////////////////////////", followingData)
 
         if (followingData) {
           setFollowing(followingData);
@@ -38,8 +38,9 @@ export default function FollowersPage() {
   };
 
   useEffect(() => {
-    console.log("user aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", user.followers);
-    setFollowers(user.followers)
+    console.log("followersData //////////////////", user?.followers);
+    setFollowers(user?.followers);
+
   }, [user]);
 
   useEffect(() => {
@@ -53,48 +54,6 @@ export default function FollowersPage() {
 
   return (
     <SafeAreaView style={[styles.container]} >
-     
-     {/* <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
-        <UserInfoCard/>
-
-        <View style={styles.followOptions}>
-          <TouchableOpacity style={[styles.followButton, styles.activeButton]}>
-            <Text style={[styles.followButtonText, styles.activeButtonText]}>Followers</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.followButton}>
-            <Text style={styles.followButtonText}>Following</Text>
-          </TouchableOpacity>
-        </View>
-
-        <View style={styles.followersList}>
-          <FlatList
-            data={followers}
-            renderItem={({ item, index }) => {
-              const isLast = index === followers.length - 1;
-              return (
-                <View
-                  key={item.id}
-                  style={[
-                    styles.participantItem,
-                    !isLast && { borderBottomWidth: 1, borderBottomColor: '#f3f4f6' },
-                  ]}
-                >
-                  <Image source={{ uri: item.avatar }} style={styles.participantAvatar} />
-                  <View style={styles.participantInfo}>
-                    <Text style={styles.participantName}>{item.name}</Text>
-                    {item.telnumber && (
-                      <Text style={styles.followerPhoneNumber}>{item.telnumber}</Text>
-                    )}
-                  </View>
-                  <EllipsisVertical size={20} color="#999" />
-                </View>
-              );
-            }}
-            keyExtractor={(item, index) => index}
-          />
-        </View>
-      </ScrollView> */}
-
       <Tabs.Container
         renderHeader={()=> <UserInfoCard style={{marginHorizontal: 10}}/>}
         headerHeight={250}
