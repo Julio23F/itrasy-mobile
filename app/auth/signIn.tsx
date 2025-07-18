@@ -31,9 +31,9 @@ const LoginScreen = () => {
     try {
       const responseLogin = await signIn(email, password);
       console.log("RESPONSE FROM LOGIN :", responseLogin);
-      if (responseLogin.session) {
-        router.replace("/");
-      }
+      // if (responseLogin.session) {
+      //   router.replace("/");
+      // }
     } catch (error) {
       console.log(error);
     } finally {

@@ -1,5 +1,6 @@
-import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, Alert } from 'react-native';
 import { ArrowLeft, ChevronRight, Settings, ShoppingBag, MapPin, Lock, CircleHelp as HelpCircle, LogOut } from 'lucide-react-native';
+import { useSession } from "../../../context/authContext";
 
 const menuItems = [
   { icon: Settings, title: 'Settings'},
@@ -7,10 +8,26 @@ const menuItems = [
   { icon: MapPin, title: 'Address'},
   { icon: Lock, title: 'Change Password'},
   { icon: HelpCircle, title: 'Help & Support'},
-  { icon: LogOut, title: 'Log out'},
 ];
 
 export default function ProfileScreen() {
+
+  const { signOut } = useSession();
+
+  const showLogoutAlert = () => {
+    Alert.alert("Déconnexion", "Êtes-vous sûr de vouloir vous déconnecter ?", [
+      {
+        text: "Annuler",
+        onPress: () => console.log("cancel logout"),
+      },
+      {
+        text: "Déconnexion",
+        onPress: () => signOut(),
+        // style: "destructive",
+      },
+    ]);
+  };
+
   return (
     <ScrollView style={styles.container}>
         <View style={styles.profileSection}>
@@ -30,21 +47,35 @@ export default function ProfileScreen() {
 
         <View style={styles.menuContainer}>
             {menuItems.map((item, index) => (
-            <TouchableOpacity
-                key={index}
-                style={[
-                styles.menuItem,
-                index === menuItems.length - 1 && styles.lastMenuItem
-                ]}
-                onPress={() => console.log('Test')}
-            >
-                <View style={styles.menuItemLeft}>
-                <item.icon size={20} color="#000" />
-                <Text style={styles.menuItemText}>{item.title}</Text>
-                </View>
-                <ChevronRight size={20} color="#666" />
-            </TouchableOpacity>
+              <TouchableOpacity
+                  key={index}
+                  style={[
+                  styles.menuItem,
+                  // index === menuItems.length - 1 && styles.lastMenuItem
+                  ]}
+                  onPress={() => onPress={showLogoutAlert}}
+              >
+                  <View style={styles.menuItemLeft}>
+                  <item.icon size={20} color="#000" />
+                  <Text style={styles.menuItemText}>{item.title}</Text>
+                  </View>
+                  <ChevronRight size={20} color="#666" />
+              </TouchableOpacity>
             ))}
+
+            <TouchableOpacity
+              style={[
+                styles.menuItem,
+                styles.lastMenuItem
+              ]}
+              onPress={showLogoutAlert}
+            >
+              <View style={styles.menuItemLeft}>
+                <LogOut size={20} color="#000" />
+                <Text style={styles.menuItemText}>Log out</Text>
+              </View>
+              <ChevronRight size={20} color="#666" />
+            </TouchableOpacity>
         </View>
     </ScrollView>
   );

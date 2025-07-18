@@ -4,21 +4,26 @@ import axios from "axios";
 
 const API_URL = process.env.EXPO_PUBLIC_API_URL;
 
-export const signIn = async (email, password) => {
+export const signInService = async (email, password) => {
   try {
     console.log("API_URL :", API_URL);
     // const response = await axios.post(`${API_URL}/auth/token/`, {
     //   email,
     //   password,
     // });
-    const response = await axios.post(`https://bradford-secret-age-tractor.trycloudflare.com/api/v1/auth/login/`, {
+    const response = await axios.post(`https://geographical-pictures-disorders-aspects.trycloudflare.com/api/v1/auth/login/`, {
         email,
         password,
     });
     console.log("RESPONSE FROM SIGN IN :", response);
-    const { access, refresh } = response.data;
-    const session = { access, refresh };
+
+    const { token, refresh } = response.data;
+    const session = { access: token, refresh: token };
+    
+    console.log("session /////////////////", session);
+    
     return { session };
+    
   } catch (error) {
     if (error.response) {
       const status = error.response.status;

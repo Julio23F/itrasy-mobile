@@ -5,7 +5,7 @@ import api from "../config/api";
 
 export const getUserData = async () => {
   try {
-    const response = await api.get("/auth/user-data/");
+    const response = await api.get("api/v1/member/auth/");
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {

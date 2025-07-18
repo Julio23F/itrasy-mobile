@@ -1,48 +1,41 @@
-import { useEffect, useCallback, useReducer } from "react";
+import { useEffect, useState } from "react";
 import * as SecureStore from "expo-secure-store";
 
-function useAsyncState(initialValue = [true, null]) {
-  return useReducer(
-    (state, action = null) => [false, action],
-    initialValue
-  );
-}
-
-export async function setStorageItemAsync(key, value) {
-  if (value == null) {
-    await SecureStore.deleteItemAsync(key);
-  } else {
-    await SecureStore.setItemAsync(key, value);
-  }
-}
-
 export function useStorageState(key) {
-  const [state, setState] = useAsyncState();
+  const [state, setState] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    SecureStore.getItemAsync(key).then((value) => {
-      if (value != null) {
-        try {
-          const parsedValue = JSON.parse(value);
-          setState(parsedValue);
-        } catch (error) {
-          setState(value);
+    const loadStoredValue = async () => {
+      try {
+        const storedValue = await SecureStore.getItemAsync(key);
+        if (storedValue) {
+          const parsed = JSON.parse(storedValue);
+          setState(parsed);
         }
-      } else {
-        setState(null);
+      } catch (error) {
+        console.error("Erreur lors du chargement depuis SecureStore :", error);
+      } finally {
+        setIsLoading(false);
       }
-    });
+    };
+
+    loadStoredValue();
   }, [key]);
 
-  
-  const setValue = useCallback(
-    (value) => {
-      setState(value);
-      const stringValue = value != null ? JSON.stringify(value) : null;
-      setStorageItemAsync(key, stringValue);
-    },
-    [key]
-  );
+  const setStoredValue = (value) => {
+    if (value) {
+      SecureStore.setItemAsync(key, JSON.stringify(value)).catch((error) =>
+        console.error("Erreur lors de l'enregistrement dans SecureStore :", error)
+      );
+    } else {
+      SecureStore.deleteItemAsync(key).catch((error) =>
+        console.error("Erreur lors de la suppression dans SecureStore :", error)
+      );
+    }
 
-  return [[state[0], state[1]], setValue];
+    setState(value);
+  };
+
+  return [[isLoading, state], setStoredValue];
 }
