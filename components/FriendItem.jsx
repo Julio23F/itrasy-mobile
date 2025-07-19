@@ -5,6 +5,8 @@ import React, { memo } from "react";
 import { Menu, MenuOptions, MenuOption, MenuTrigger } from 'react-native-popup-menu';
 import { EllipsisVertical } from 'lucide-react-native';
 import {unfollowUser as unfollowUserService} from "../services/followServices";
+import {formatPhoneNumber} from "../utils/telNumber";
+import { useFollow } from '../context/followContext'; 
 
 const FriendItem = ({
     item, 
@@ -16,6 +18,7 @@ const FriendItem = ({
     isActionFollow=false, 
     ...props
   }) => {
+    const { following, setFollowing } = useFollow();
 
     const showLogoutAlert = () => {
       Alert.alert("Retirer", "Êtes-vous sûr de vouloir ne plus suivre cette personne ?", [
@@ -30,19 +33,35 @@ const FriendItem = ({
       ]);
     };
 
+    // const unfollowUser = async () => {
+    //   try {
+    //     const response = await unfollowUserService(item.id);
+
+    //     console.log("unfollowUserService /////////////////////////", response)
+
+    //     if (response.unfollowed) {
+    //       setFollowing([...following]);
+    //     }
+    //   } catch (error) {
+    //     console.error("Erreur lors de la récupération des données utilisateur", error);
+    //   }
+    // };
+
     const unfollowUser = async () => {
       try {
-        const followingData = await unfollowUserService(item.id);
-
-        console.log("unfollowUserService /////////////////////////", followingData)
-
-        // if (followingData) {
-        //   setFollowing(followingData);
-        // }
+        const response = await unfollowUserService(item.id);
+    
+        console.log("unfollowUserService /////////////////////////", response);
+    
+        if (response.unfollowed) {
+          const updatedFollowing = following.filter(user => user.id !== item.id);
+          setFollowing(updatedFollowing);
+        }
       } catch (error) {
-        console.error("Erreur lors de la récupération des données utilisateur", error);
+        console.error("Erreur lors du unfollow", error);
       }
     };
+    
 
     return (
       <Animated.View
@@ -70,7 +89,7 @@ const FriendItem = ({
             <View style={styles.participantInfo}>
                 <Text style={styles.participantName}>{item?.first_name} {item?.last_name}</Text>
                 {item?.telnumber && (
-                  <Text style={styles.followerPhoneNumber}>{item?.telnumber}</Text>
+                  <Text style={styles.followerPhoneNumber}>{formatPhoneNumber(item?.telnumber)}</Text>
                 )}
             </View>
 

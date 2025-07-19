@@ -1,3 +1,6 @@
+import axios from "axios";
+import api from "../config/api";
+
 export const followUser = async (member_ids = []) => {
     try {
       const response = await api.post(

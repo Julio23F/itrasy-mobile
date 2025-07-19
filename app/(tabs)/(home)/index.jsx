@@ -12,31 +12,49 @@ import { useSession } from "../../../context/authContext";
 import { useEffect } from 'react';
 import { getFollowingUsers } from "../../../services/followServices";
 import {checkIfFollowedById} from "../../../utils/member";
-
+import { useFollow } from '../../../context/followContext'; 
 
 export default function FollowersPage() {
   // const router = useRouter();
   const { user, session } = useSession();
-  const [followers, setFollowers] = useState();
-  const [following, setFollowing] = useState();
+  
+  // const [followers, setFollowers] = useState();
+  // const [following, setFollowing] = useState();
 
-  const fetchFollowingUsers = async () => {
-    if (session) {
-      try {
-        const followingData = await getFollowingUsers();
+  // const [refreshing, setRefreshing] = useState(false);
 
-        console.log("followingData /////////////////////////", followingData)
 
-        if (followingData) {
-          setFollowing(followingData);
-        }
-      } catch (error) {
-        console.error("Erreur lors de la récupération des données utilisateur", error);
-      }
-    } else {
-      setFollowing(null);
-    }
+  const { following, fetchFollowingUsers } = useFollow();
+
+  const [followers, setFollowers] = useState([]);
+  const [refreshing, setRefreshing] = useState(false);
+
+
+
+
+  const handleRefresh = async () => {
+    setRefreshing(true);
+    await fetchFollowingUsers();
+    setRefreshing(false);
   };
+  
+  // const fetchFollowingUsers = async () => {
+  //   if (session) {
+  //     try {
+  //       const followingData = await getFollowingUsers();
+
+  //       console.log("followingData /////////////////////////", followingData)
+
+  //       if (followingData) {
+  //         setFollowing(followingData);
+  //       }
+  //     } catch (error) {
+  //       console.error("Erreur lors de la récupération des données utilisateur", error);
+  //     }
+  //   } else {
+  //     setFollowing(null);
+  //   }
+  // };
 
   useEffect(() => {
     console.log("followersData //////////////////", user?.followers);
@@ -44,9 +62,9 @@ export default function FollowersPage() {
 
   }, [user]);
 
-  useEffect(() => {
-    fetchFollowingUsers();
-  }, []);
+  // useEffect(() => {
+  //   fetchFollowingUsers();
+  // }, []);
 
 
   const handleAddMember = () => {
@@ -81,6 +99,8 @@ export default function FollowersPage() {
           <View style={[styles.followersList, {marginTop: 10}]}>
             <Tabs.FlatList
               data={following}
+              refreshing={refreshing}
+              onRefresh={handleRefresh}
               showsVerticalScrollIndicator={false}
               renderItem={({ item, index }) => {
                 const isLast = index === following.length - 1;

@@ -4,13 +4,15 @@ import FriendItem from "../../../components/FriendItem";
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import { router, Link } from 'expo-router';
 import { getUsers } from "../../../services/fetchData";
-import { followUser } from "../../../services/followServices";
+import { followUser as followUserService } from "../../../services/followServices";
 import { useState, useEffect } from 'react';
 import { useSession } from "../../../context/authContext";
 import {checkIfFollowedById} from "../../../utils/member";
+import { useFollow } from '../../../context/followContext'; 
 
 export default function SearchFriends() {
   const { user } = useSession();
+  const { following, setFollowing } = useFollow();
 
   const [search, setSearch] = useState("");
   const [members, setMembers] = useState([]);
@@ -29,9 +31,10 @@ export default function SearchFriends() {
   };
 
 
-  const followUserList = async (userId) => {
+  const followUser = async (userItem) => {
+    const userId = userItem.id;
     try {
-      const response = await followUser([userId]);
+      const response = await followUserService([userId]);
   
       if (response.followed) {
         const currentUser = user;
@@ -53,6 +56,12 @@ export default function SearchFriends() {
         });
   
         setMembers(updatedMembers);
+
+        // Mise à jour global de follwing
+        setFollowing([
+          ...following,
+          userItem
+        ]);
       }
   
     } catch (error) {
@@ -132,8 +141,8 @@ export default function SearchFriends() {
 
                   onPress={
                     isAldreadyFollow 
-                    ? ()=>followUserList(item.id)
-                    : ()=>followUserList(item.id)
+                    ? ()=>followUser(item)
+                    : ()=>followUser(item)
                   }
                 />
               );
