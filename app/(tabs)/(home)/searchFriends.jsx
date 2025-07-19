@@ -3,7 +3,8 @@ import { Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View,
 import FriendItem from "../../../components/FriendItem";
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import { router, Link } from 'expo-router';
-import { getUsers, followUser } from "../../../services/fetchData";
+import { getUsers } from "../../../services/fetchData";
+import { followUser } from "../../../services/followServices";
 import { useState, useEffect } from 'react';
 import { useSession } from "../../../context/authContext";
 import {checkIfFollowedById} from "../../../utils/member";

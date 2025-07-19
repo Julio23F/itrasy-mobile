@@ -10,7 +10,7 @@ import { router, Link } from 'expo-router';
 // import { useRouter } from 'expo-router';
 import { useSession } from "../../../context/authContext";
 import { useEffect } from 'react';
-import { getFollowingUsers } from "../../../services/fetchData";
+import { getFollowingUsers } from "../../../services/followServices";
 import {checkIfFollowedById} from "../../../utils/member";
 
 
@@ -77,31 +77,15 @@ export default function FollowersPage() {
           )
         }
       >
-        <Tabs.Tab name="Followers" label="Followers">
+        <Tabs.Tab name="Following" label="Following">
           <View style={[styles.followersList, {marginTop: 10}]}>
             <Tabs.FlatList
-              data={followers}
+              data={following}
               showsVerticalScrollIndicator={false}
               renderItem={({ item, index }) => {
-                const isLast = index === followers.length - 1;
+                const isLast = index === following.length - 1;
                 const isFirst = index === 0;
                 return (
-                  // <View
-                  //   key={item.id}
-                  //   style={[
-                  //     styles.participantItem,
-                  //     !isLast && { borderBottomWidth: 1, borderBottomColor: '#f3f4f6' },
-                  //   ]}
-                  // >
-                  //   <Image source={{ uri: item.avatar }} style={styles.participantAvatar} />
-                  //   <View style={styles.participantInfo}>
-                  //     <Text style={styles.participantName}>{item.name}</Text>
-                  //     {item.telnumber && (
-                  //       <Text style={styles.followerPhoneNumber}>{item.telnumber}</Text>
-                  //     )}
-                  //   </View>
-                  //   <EllipsisVertical size={20} color="#999" />
-                  // </View>
                   <FriendItem 
                     item={item} 
                     index={index} 
@@ -114,13 +98,13 @@ export default function FollowersPage() {
             />
           </View>
         </Tabs.Tab>
-        <Tabs.Tab name="Following" label="Following">
+        <Tabs.Tab name="Followers" label="Followers">
           <View style={[styles.followersList, {marginTop: 10}]}>
             <Tabs.FlatList
-              data={following}
+              data={followers}
               showsVerticalScrollIndicator={false}
               renderItem={({ item, index }) => {
-                const isLast = index === following.length - 1;
+                const isLast = index === followers.length - 1;
                 const isAldreadyFollow = checkIfFollowedById(item, user?.id);
 
                 return (

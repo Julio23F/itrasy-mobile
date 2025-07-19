@@ -8,6 +8,7 @@ import { SessionProvider, useSession } from "../context/authContext";
 import { Slot, useRouter, useSegments } from 'expo-router';
 
 import { Text, View, SafeAreaView } from "react-native";
+import { MenuProvider } from 'react-native-popup-menu';
 
 const MainLayout = () => {
   const { session, isLoading } = useSession();
@@ -38,13 +39,14 @@ const RootLayout = () => {
 
   return (
     <SessionProvider>
+      <MenuProvider>
       {/* <Stack screenOptions={{ headerShown: false }}>
         <Stack.Screen name="auth/signIn" />
         <Stack.Screen name="auth/signUp" />
       </Stack>
       <StatusBar style="light" /> */}
-      <MainLayout />
-
+        <MainLayout />
+      </MenuProvider>
     </SessionProvider>
   );
 }
