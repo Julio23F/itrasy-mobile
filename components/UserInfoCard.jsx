@@ -1,7 +1,8 @@
 import { QrCode } from 'lucide-react-native';
 import { Image, StyleSheet, Text, View } from 'react-native';
+import {formatPhoneNumber} from "../utils/telNumber";
 
-const userInfoCard = ({...props}) => {
+const userInfoCard = ({user, ...props}) => {
 
     return (
         <View style={[styles.userInfoCard, props.style]}>
@@ -11,8 +12,8 @@ const userInfoCard = ({...props}) => {
                 style={styles.merchantLogo}
             />
             <View style={styles.userInfo}>
-                <Text style={styles.userName}>FARALAHY Julio</Text>
-                <Text style={styles.userPhone}>+261 32 45 018 01</Text>
+                <Text style={styles.userName}>{user?.last_name} {user?.first_name}</Text>
+                <Text style={styles.userPhone}>{formatPhoneNumber(user?.telnumber)}</Text>
             </View>
             {/* <Text style={styles.showUserInfo}>QrCode</Text> */}
             <QrCode size={20} color="#999" />

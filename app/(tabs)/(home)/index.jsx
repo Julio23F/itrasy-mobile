@@ -56,7 +56,7 @@ export default function FollowersPage() {
   return (
     <SafeAreaView style={[styles.container]} >
       <Tabs.Container
-        renderHeader={()=> <UserInfoCard style={{marginHorizontal: 10}}/>}
+        renderHeader={()=> <UserInfoCard user={user} style={{marginHorizontal: 10}}/>}
         headerHeight={250}
         headerContainerStyle={{
           backgroundColor: "#fff",
