@@ -3,7 +3,7 @@ import { Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View,
 import FriendItem from "../../../components/FriendItem";
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import { router, Link } from 'expo-router';
-import { getUsers } from "../../../services/fetchData";
+import { getUsers, followUser } from "../../../services/fetchData";
 import { useState, useEffect } from 'react';
 import { useSession } from "../../../context/authContext";
 import {checkIfFollowedById} from "../../../utils/member";
@@ -19,7 +19,6 @@ export default function SearchFriends() {
     try {
       const userData = await getUsers({ first_name: search});
 
-
       if (userData) {
         setMembers(userData.dataset);
       }
@@ -29,10 +28,40 @@ export default function SearchFriends() {
   };
 
 
-  // useEffect(() => {
-  //   console.log("change")
-  //   searchUser();
-  // }, [search]);
+  const followUserList = async (userId) => {
+    try {
+      const response = await followUser([userId]);
+  
+      if (response.followed) {
+        const currentUser = user;
+
+        const updatedMembers = members.map((member) => {
+          if (member.id === userId) {
+            const alreadyExists = member.followers?.some(
+              (f) => f.id === currentUser.id
+            );
+  
+            return {
+              ...member,
+              followers: alreadyExists
+                ? member.followers
+                : [...(member.followers || []), currentUser],
+            };
+          }
+          return member;
+        });
+  
+        setMembers(updatedMembers);
+      }
+  
+    } catch (error) {
+      console.error("Erreur lors de la mise à jour des followers :", error);
+    }
+  };
+  
+
+
+
 
   useEffect(() => {
     const delayDebounce = setTimeout(() => {
@@ -45,7 +74,7 @@ export default function SearchFriends() {
   
     return () => clearTimeout(delayDebounce);
   }, [search]);
-  
+
 
 
   const handleBack = () => {
@@ -66,6 +95,7 @@ export default function SearchFriends() {
             style={styles.searchInput}
             placeholder="Search by name or phone number"
             placeholderTextColor="#9ca3af"
+            value={search}
             onChangeText={setSearch}
           />
         </View>
@@ -101,8 +131,8 @@ export default function SearchFriends() {
 
                   onPress={
                     isAldreadyFollow 
-                    ? ()=>console.log("Déja suivi")
-                    : ()=>console.log("Action pour suivre")
+                    ? ()=>followUserList(item.id)
+                    : ()=>followUserList(item.id)
                   }
                 />
               );

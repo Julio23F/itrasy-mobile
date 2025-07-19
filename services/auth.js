@@ -7,14 +7,14 @@ const API_URL = process.env.EXPO_PUBLIC_API_URL;
 export const signInService = async (email, password) => {
   try {
     console.log("API_URL :", API_URL);
-    // const response = await axios.post(`${API_URL}/auth/token/`, {
-    //   email,
-    //   password,
-    // });
-    const response = await axios.post(`https://geographical-pictures-disorders-aspects.trycloudflare.com/api/v1/auth/login/`, {
-        email,
-        password,
+    const response = await axios.post(`${API_URL}/api/v1/auth/login/`, {
+      email,
+      password,
     });
+    // const response = await axios.post(`https://geographical-pictures-disorders-aspects.trycloudflare.com/api/v1/auth/login/`, {
+    //     email,
+    //     password,
+    // });
     console.log("RESPONSE FROM SIGN IN :", response);
 
     const { token, refresh } = response.data;
