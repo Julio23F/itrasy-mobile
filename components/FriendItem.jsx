@@ -18,7 +18,7 @@ const FriendItem = ({
     isActionFollow=false, 
     ...props
   }) => {
-    const { following, setFollowing } = useFollow();
+    const { following, setFollowing, refreshFollowData } = useFollow();
 
     const showLogoutAlert = () => {
       Alert.alert("Retirer", "Êtes-vous sûr de vouloir ne plus suivre cette personne ?", [
@@ -54,8 +54,11 @@ const FriendItem = ({
         console.log("unfollowUserService /////////////////////////", response);
     
         if (response.unfollowed) {
-          const updatedFollowing = following.filter(user => user.id !== item.id);
-          setFollowing(updatedFollowing);
+          // const updatedFollowing = following.filter(user => user.id !== item.id);
+          // setFollowing(updatedFollowing);
+
+
+          await refreshFollowData();
         }
       } catch (error) {
         console.error("Erreur lors du unfollow", error);

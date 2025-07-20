@@ -77,4 +77,29 @@ export const getFollowingUsers = async () => {
     return [];
   }
 };
+
+
+export const getFollowersUsers = async () => {
+  try {
+    const response = await api.get("api/v1/member/followers/all/");
+    return response.data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      console.log("ERROR :", error);
+      const openAiError = error.response?.data?.error;
+      console.log("openAiError", openAiError);
+      if (openAiError) {
+        // Toast.show({
+        //     type: "error",
+        //     text1: "Erreur",
+        //     text2: openAiError,
+
+        //     position: options.position || "top",
+        //     topOffset: 50,
+        // });
+      }
+    }
+    return [];
+  }
+};
   

@@ -13,20 +13,13 @@ import { useEffect } from 'react';
 import { getFollowingUsers } from "../../../services/followServices";
 import {checkIfFollowedById} from "../../../utils/member";
 import { useFollow } from '../../../context/followContext'; 
+import { followUser as followUserService } from "../../../services/followServices";
 
 export default function FollowersPage() {
-  // const router = useRouter();
   const { user, session } = useSession();
   
-  // const [followers, setFollowers] = useState();
-  // const [following, setFollowing] = useState();
+  const { following, fetchFollowingUsers, setFollowing, followers, setFollowers, fetchFollowersUsers, refreshFollowData } = useFollow();
 
-  // const [refreshing, setRefreshing] = useState(false);
-
-
-  const { following, fetchFollowingUsers } = useFollow();
-
-  const [followers, setFollowers] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
 
 
@@ -37,34 +30,52 @@ export default function FollowersPage() {
     await fetchFollowingUsers();
     setRefreshing(false);
   };
+
+  const handleRefreshFollowers = async () => {
+    setRefreshing(true);
+    await fetchFollowersUsers();
+    setRefreshing(false);
+  };
   
-  // const fetchFollowingUsers = async () => {
-  //   if (session) {
-  //     try {
-  //       const followingData = await getFollowingUsers();
+  
+  // const followUser = async (userItem) => {
+  //   const userId = userItem.id;
+  //   try {
+  //     const response = await followUserService([userId]);
+  
+  //     if (response.followed) {
+  //       const currentUser = user;
 
-  //       console.log("followingData /////////////////////////", followingData)
+  
+  //       // setFollowers([
+  //       //   ...followers,
+  //       // ]);
 
-  //       if (followingData) {
-  //         setFollowing(followingData);
-  //       }
-  //     } catch (error) {
-  //       console.error("Erreur lors de la récupération des données utilisateur", error);
+  //       // // Mise à jour global de follwing
+  //       // setFollowing([
+  //       //   ...following,
+  //       //   userItem
+  //       // ]);
   //     }
-  //   } else {
-  //     setFollowing(null);
+  
+  //   } catch (error) {
+  //     console.error("Erreur lors de la mise à jour des followers :", error);
   //   }
   // };
 
-  useEffect(() => {
-    console.log("followersData //////////////////", user?.followers);
-    setFollowers(user?.followers);
-
-  }, [user]);
-
-  // useEffect(() => {
-  //   fetchFollowingUsers();
-  // }, []);
+  const followUser = async (userItem) => {
+    const userId = userItem.id;
+  
+    try {
+      const response = await followUserService([userId]);
+  
+      if (response.followed) {
+        await refreshFollowData();
+      }
+    } catch (error) {
+      console.error("Erreur lors de la mise à jour des followers :", error);
+    }
+  };
 
 
   const handleAddMember = () => {
@@ -123,6 +134,9 @@ export default function FollowersPage() {
             <Tabs.FlatList
               data={followers}
               showsVerticalScrollIndicator={false}
+
+              refreshing={refreshing}
+              onRefresh={handleRefreshFollowers}
               renderItem={({ item, index }) => {
                 const isLast = index === followers.length - 1;
                 const isAldreadyFollow = checkIfFollowedById(item, user?.id);
@@ -134,10 +148,11 @@ export default function FollowersPage() {
                     isActionFollow={true} 
                     isAldreadyFollow={isAldreadyFollow} 
                     isLast={isLast}
+                    
                     onPress={
                       isAldreadyFollow 
-                      ? ()=>console.log("Déja suivi")
-                      : ()=>console.log("Action pour suivre")
+                      ? ()=>console.log("AldreadyFollow True")
+                      : ()=>followUser(item)
                     }
                   />
                 );

@@ -1,10 +1,16 @@
+// context/followContext.js
+
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { getFollowingUsers } from '../services/followServices';
+import { getFollowingUsers, getFollowersUsers } from '../services/followServices';
+import { useSession } from "./authContext";
 
 const FollowContext = createContext();
 
 export const FollowProvider = ({ children }) => {
+  const { user } = useSession();
+
   const [following, setFollowing] = useState([]);
+  const [followers, setFollowers] = useState([]);
   const [loading, setLoading] = useState(false);
 
   const fetchFollowingUsers = async () => {
@@ -21,12 +27,44 @@ export const FollowProvider = ({ children }) => {
     }
   };
 
+  const fetchFollowersUsers = async () => {
+    try {
+      setLoading(true);
+      const data = await getFollowersUsers();
+      if (data) {
+        setFollowers(data);
+      }
+    } catch (err) {
+      console.error("Erreur dans fetchFollowersUsers", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const refreshFollowData = async () => {
+    await Promise.all([fetchFollowersUsers(), fetchFollowingUsers()]);
+  };
+
+  // Initial fetch on mount
   useEffect(() => {
-    fetchFollowingUsers();
+    refreshFollowData();
   }, []);
 
   return (
-    <FollowContext.Provider value={{ following, setFollowing, fetchFollowingUsers, loading }}>
+    <FollowContext.Provider 
+      value={{ 
+        following, 
+        setFollowing, 
+        fetchFollowingUsers, 
+        
+        followers,
+        setFollowers,
+        fetchFollowersUsers,
+
+        refreshFollowData,
+        loading,
+      }}
+    >
       {children}
     </FollowContext.Provider>
   );

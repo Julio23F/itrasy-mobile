@@ -12,7 +12,7 @@ import { useFollow } from '../../../context/followContext';
 
 export default function SearchFriends() {
   const { user } = useSession();
-  const { following, setFollowing } = useFollow();
+  const { following, setFollowing, refreshFollowData } = useFollow();
 
   const [search, setSearch] = useState("");
   const [members, setMembers] = useState([]);
@@ -57,11 +57,15 @@ export default function SearchFriends() {
   
         setMembers(updatedMembers);
 
+
+
         // Mise à jour global de follwing
-        setFollowing([
-          ...following,
-          userItem
-        ]);
+        await refreshFollowData();
+
+        // setFollowing([
+        //   ...following,
+        //   userItem
+        // ]);
       }
   
     } catch (error) {
@@ -141,7 +145,7 @@ export default function SearchFriends() {
 
                   onPress={
                     isAldreadyFollow 
-                    ? ()=>followUser(item)
+                    ? ()=>console.log("AldreadyFollow True")
                     : ()=>followUser(item)
                   }
                 />
