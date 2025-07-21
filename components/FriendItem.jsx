@@ -84,11 +84,17 @@ const FriendItem = ({
                 style
             ]}
         >
-            <Image 
+            {/* <Image 
               source={{ 
-                uri: item.avatar ? item?.avatar : "https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&fit=crop" }} 
+                // uri: item.avatar ? item?.avatar : "https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&fit=crop" }} 
+                uri: item.avatar ? item?.avatar : require('../assets/avatar.png')} }} 
                 style={styles.participantAvatar} 
+            /> */}
+            <Image
+              source={item.avatar ? { uri: item.avatar } : require('../assets/images/logo.jpg')}
+              style={styles.participantAvatar}
             />
+
             <View style={styles.participantInfo}>
                 <Text style={styles.participantName}>{item?.first_name} {item?.last_name}</Text>
                 {item?.telnumber && (

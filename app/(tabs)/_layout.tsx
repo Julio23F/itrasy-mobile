@@ -49,7 +49,7 @@
 
 import { Tabs } from 'expo-router';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import { Users, Map, Search, ShoppingBag, UserCog } from 'lucide-react-native';
+import { Users, Map, Search, ShoppingBag, UserCog, Siren } from 'lucide-react-native';
 
 function CustomTabBar({ state, descriptors, navigation }: any) {
   return (
@@ -75,7 +75,7 @@ function CustomTabBar({ state, descriptors, navigation }: any) {
             case '(home)':
               return <Users size={24} color={isFocused ? '#fff' : '#888'} />;
             case '(map)':
-              return <Map size={24} color={isFocused ? '#fff' : '#888'} />;
+              return <Siren size={24} color={isFocused ? '#fff' : '#888'} />;
             case '(profile)':
               return <UserCog size={24} color={isFocused ? '#fff' : '#888'} />;
             default:

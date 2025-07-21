@@ -166,7 +166,7 @@ export default function FollowersPage() {
 
       <View style={styles.footer}>
         <TouchableOpacity style={styles.addButton} onPress={handleAddMember}>
-          <Text style={styles.addButtonText}>Add a follower</Text>
+          <Text style={styles.addButtonText}>Suivre une personne</Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>

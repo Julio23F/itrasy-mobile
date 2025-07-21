@@ -1,18 +1,19 @@
 import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, Alert } from 'react-native';
 import { ArrowLeft, ChevronRight, Settings, ShoppingBag, MapPin, Lock, CircleHelp as HelpCircle, LogOut } from 'lucide-react-native';
 import { useSession } from "../../../context/authContext";
+import {formatPhoneNumber} from "../../../utils/telNumber";
 
 const menuItems = [
-  { icon: Settings, title: 'Settings'},
-  { icon: ShoppingBag, title: 'My Orders'},
-  { icon: MapPin, title: 'Address'},
-  { icon: Lock, title: 'Change Password'},
-  { icon: HelpCircle, title: 'Help & Support'},
+  // { icon: Settings, title: 'Settings'},
+  // { icon: ShoppingBag, title: 'My Orders'},
+  // { icon: MapPin, title: 'Address'},
+  // { icon: Lock, title: 'Change Password'},
+  // { icon: HelpCircle, title: 'Help & Support'},
 ];
 
 export default function ProfileScreen() {
 
-  const { signOut } = useSession();
+  const { signOut, user } = useSession();
 
   const showLogoutAlert = () => {
     Alert.alert("Déconnexion", "Êtes-vous sûr de vouloir vous déconnecter ?", [
@@ -33,15 +34,15 @@ export default function ProfileScreen() {
         <View style={styles.profileSection}>
             <View style={styles.avatarContainer}>
                 <Image
-                    source={{ uri: 'https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=200&h=200&dpr=1' }}
+                    source={require('../../../assets/images/logo.jpg')}
                     style={styles.avatar}
                 />
             </View>
-            <Text style={styles.userName}>FARALAHY Julio</Text>
-            <Text style={styles.userHandle}>+261 32 45 018 01</Text>
+            <Text style={styles.userName}>{user.last_name} {user.first_name}</Text>
+            <Text style={styles.userHandle}>{formatPhoneNumber(user?.telnumber)}</Text>
             
             <TouchableOpacity style={styles.editButton}>
-                <Text style={styles.editButtonText}>Edit Profile</Text>
+                <Text style={styles.editButtonText}>Modifier le Profile</Text>
             </TouchableOpacity>
         </View>
 
@@ -72,7 +73,7 @@ export default function ProfileScreen() {
             >
               <View style={styles.menuItemLeft}>
                 <LogOut size={20} color="#000" />
-                <Text style={styles.menuItemText}>Log out</Text>
+                <Text style={styles.menuItemText}>Déconnexion</Text>
               </View>
               <ChevronRight size={20} color="#666" />
             </TouchableOpacity>
