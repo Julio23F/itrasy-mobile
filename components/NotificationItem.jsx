@@ -27,7 +27,6 @@ const NotificationItem = ({
           .duration(500)
           .springify()
           .damping(14)}
-        style={styles.container}
         {...props}
       >
         <View
@@ -39,11 +38,6 @@ const NotificationItem = ({
                 style
             ]}
         >
-            {/* <Image 
-              source={{ 
-                uri: item.avatar ? item?.avatar : "https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&fit=crop" }} 
-                style={styles.participantAvatar} 
-            /> */}
             <View style={styles.participantAvatar}>
                 <Siren size={20} color="#999" />
             </View>

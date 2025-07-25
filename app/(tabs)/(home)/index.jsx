@@ -178,6 +178,8 @@ const styles = StyleSheet.create({
     flex: 1,
     // backgroundColor: '#F6F6F6',
     backgroundColor: '#f9fafb',
+    paddingHorizontal: "auto"
+
   },
   content: {
     flex: 1,
