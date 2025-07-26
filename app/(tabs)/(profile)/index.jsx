@@ -38,7 +38,7 @@ export default function ProfileScreen() {
                     style={styles.avatar}
                 />
             </View>
-            <Text style={styles.userName}>{user.last_name} {user.first_name}</Text>
+            <Text style={styles.userName}>{user?.last_name} {user?.first_name}</Text>
             <Text style={styles.userHandle}>{formatPhoneNumber(user?.telnumber)}</Text>
             
             <TouchableOpacity style={styles.editButton}>

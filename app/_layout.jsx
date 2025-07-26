@@ -11,14 +11,18 @@ import { Text, View, SafeAreaView } from "react-native";
 import { MenuProvider } from 'react-native-popup-menu';
 import { FollowProvider } from '../context/followContext';
 
+import usePushNotifications from '../hooks/usePushNotifications';
 
 const MainLayout = () => {
+  usePushNotifications();
+
   const { session, isLoading } = useSession();
   
   const segments = useSegments();
   const router = useRouter();
 
   useEffect(() => {
+
     console.log("segments", segments[0]);
 
     if (!router || isLoading) return;
