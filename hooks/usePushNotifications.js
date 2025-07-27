@@ -38,10 +38,10 @@ export default function usePushNotifications() {
       console.log("👆 Réponse utilisateur :", response);
     });
 
-    return () => {
-      Notifications.removeNotificationSubscription(notificationListener.current);
-      Notifications.removeNotificationSubscription(responseListener.current);
-    };
+    // return () => {
+    //   Notifications.removeNotificationSubscription(notificationListener.current);
+    //   Notifications.removeNotificationSubscription(responseListener.current);
+    // };
   }, []);
 
   return expoPushToken;
