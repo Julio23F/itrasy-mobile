@@ -24,7 +24,7 @@
 //         }}
 //       />
 //       <Tabs.Screen
-//         name="(map)"
+//         name="(notification)"
 //         options={{
 //           title: 'Exemple',
 //           tabBarIcon: ({ size, color }) => (
@@ -74,7 +74,7 @@ function CustomTabBar({ state, descriptors, navigation }: any) {
           switch (route.name) {
             case '(home)':
               return <Users size={24} color={isFocused ? '#fff' : '#888'} />;
-            case '(map)':
+            case '(notification)':
               return <Siren size={24} color={isFocused ? '#fff' : '#888'} />;
             case '(profile)':
               return <UserCog size={24} color={isFocused ? '#fff' : '#888'} />;
@@ -106,7 +106,7 @@ export default function TabLayout() {
       }}
     >
       <Tabs.Screen name="(home)" />
-      <Tabs.Screen name="(map)" />
+      <Tabs.Screen name="(notification)" />
       <Tabs.Screen name="(profile)" />
     </Tabs>
   );
