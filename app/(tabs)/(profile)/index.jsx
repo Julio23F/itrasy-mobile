@@ -4,11 +4,11 @@ import { useSession } from "../../../context/authContext";
 import {formatPhoneNumber} from "../../../utils/telNumber";
 
 const menuItems = [
-  // { icon: Settings, title: 'Settings'},
-  // { icon: ShoppingBag, title: 'My Orders'},
-  // { icon: MapPin, title: 'Address'},
-  // { icon: Lock, title: 'Change Password'},
-  // { icon: HelpCircle, title: 'Help & Support'},
+  { icon: Settings, title: 'Settings'},
+  { icon: ShoppingBag, title: 'My Orders'},
+  { icon: MapPin, title: 'Address'},
+  { icon: Lock, title: 'Change Password'},
+  { icon: HelpCircle, title: 'Help & Support'},
 ];
 
 export default function ProfileScreen() {
