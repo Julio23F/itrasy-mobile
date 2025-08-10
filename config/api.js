@@ -4,8 +4,8 @@ import * as SecureStore from "expo-secure-store";
 
 import { router } from "expo-router";
 
-const API_URL = process.env.EXPO_PUBLIC_API_URL;
-// const API_URL = "https://geographical-pictures-disorders-aspects.trycloudflare.com";
+// const API_URL = process.env.EXPO_PUBLIC_API_URL;
+const API_URL = "https://scales-madness-tops-laptops.trycloudflare.com";
 
 const api = axios.create({
   baseURL: API_URL,

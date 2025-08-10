@@ -2,7 +2,9 @@ import axios from "axios";
 // import api from "../config/api";
 // import Toast from "react-native-toast-message";
 
-const API_URL = process.env.EXPO_PUBLIC_API_URL;
+// const API_URL = process.env.EXPO_PUBLIC_API_URL;
+const API_URL = "https://scales-madness-tops-laptops.trycloudflare.com";
+
 
 export const signInService = async (email, password) => {
   try {
