@@ -4,7 +4,7 @@ import NotificationItem from "../../../components/NotificationItem";
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import { useSession } from '../../../context/authContext'; 
 
-const WEBSOCKET_URL = "wss://gravity-detailed-pools-acts.trycloudflare.com";
+const WEBSOCKET_URL = "wss://scales-madness-tops-laptops.trycloudflare.com";
 
 const NotificationScreen = () => {
   // const { user } = useFollow();
