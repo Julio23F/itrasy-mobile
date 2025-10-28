@@ -5,7 +5,7 @@ import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-nativ
 import { useSession } from '../../../context/authContext'; 
 
 // const WEBSOCKET_URL = "wss://scales-madness-tops-laptops.trycloudflare.com";
-const WEBSOCKET_URL = "wss://scales-madness-tops-laptops.trycloudflare.com";
+const WEBSOCKET_URL = "wss://itrasy-back-tj0b3.sevalla.app";
 
 const NotificationScreen = () => {
   // const { user } = useFollow();

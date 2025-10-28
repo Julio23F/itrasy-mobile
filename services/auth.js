@@ -3,7 +3,7 @@ import axios from "axios";
 // import Toast from "react-native-toast-message";
 
 // const API_URL = process.env.EXPO_PUBLIC_API_URL;
-const API_URL = "https://scales-madness-tops-laptops.trycloudflare.com";
+const API_URL = "https://itrasy-back-tj0b3.sevalla.app";
 
 
 export const signInService = async (email, password) => {
