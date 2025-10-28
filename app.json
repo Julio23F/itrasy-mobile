@@ -12,7 +12,8 @@
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.juliof23.itrasymobile"
     },
     "android": {
       "adaptiveIcon": {
